@@ -1,4 +1,4 @@
-package com.example.android.fintech_hackathon_wv;
+package com.example.android.fintech_hackathon;
 
 import android.app.Application;
 import android.test.ApplicationTestCase;

@@ -75,7 +75,6 @@ public class LogInActivity extends AppCompatActivity {
             } catch (JSONException e) {
                 e.printStackTrace();
             }
-
             return null;
         }
 

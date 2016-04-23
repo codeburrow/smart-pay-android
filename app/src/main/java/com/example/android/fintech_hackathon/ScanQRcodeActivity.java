@@ -10,9 +10,7 @@ import android.util.Log;
 import android.util.SparseArray;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
-import android.view.View;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.google.android.gms.vision.CameraSource;
 import com.google.android.gms.vision.Detector;
@@ -21,37 +19,34 @@ import com.google.android.gms.vision.barcode.BarcodeDetector;
 
 import java.io.IOException;
 
-public class ScanQRcodeActivity extends AppCompatActivity {
+public class ScanQrCodeActivity extends AppCompatActivity {
 
     // LOG_TAG
-    private static final String TAG = ScanQRcodeActivity.class.getSimpleName();
+    private static final String TAG = ScanQrCodeActivity.class.getSimpleName();
     private static final String IBAN = "iban";
+    // Request code for runtime permissions
+    final private int REQUEST_CODE_ASK_PERMISSIONS = 123;
     // SurfaceView in order to display the preview frames captured by the camera.
     SurfaceView cameraView;
     // TextView to display the contents of the QR codes the API detects
-    TextView barcodeInfo;
+    TextView qrCodeTextView;
     // CameraSource
     CameraSource cameraSource;
     // Scanned IBAN
-    private String scanned_IBAN;
-
-    // Request code for runtime permissions
-    final private int REQUEST_CODE_ASK_PERMISSIONS = 123;
+    private String scannedIban;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_scan_qrcode);
 
-
         // Get SurfaceView from the xml.
         cameraView = (SurfaceView) findViewById(R.id.camera_view);
-        // Get TextView from the xml.
-        barcodeInfo = (TextView) findViewById(R.id.code_info);
+        qrCodeTextView = (TextView) findViewById(R.id.qr_code_detals_text_view_fake);
 
-        /*
-            the CameraSource needs a BarcodeDetector,
-            create one using the BarcodeDetector.Builder class.
+        /**
+         * the CameraSource needs a BarcodeDetector,
+         * create one using the BarcodeDetector.Builder class.
          */
         BarcodeDetector barcodeDetector =
                 new BarcodeDetector.Builder(this)
@@ -80,7 +75,7 @@ public class ScanQRcodeActivity extends AppCompatActivity {
                     if (Build.VERSION.SDK_INT >= 23) {
                         int hasWriteContactsPermission = checkSelfPermission(Manifest.permission.CAMERA);
                         if (hasWriteContactsPermission != PackageManager.PERMISSION_GRANTED) {
-                            requestPermissions(new String[] {Manifest.permission.CAMERA},
+                            requestPermissions(new String[]{Manifest.permission.CAMERA},
                                     REQUEST_CODE_ASK_PERMISSIONS);
                             return;
                         }
@@ -121,42 +116,31 @@ public class ScanQRcodeActivity extends AppCompatActivity {
                 // of the Detector.Detections class.
                 final SparseArray<Barcode> barcodes = detections.getDetectedItems();
 
-                if (barcodes.size() != 0) {
-                    // Use the post method of the TextView
-                    barcodeInfo.post(new Runnable() {
-                        public void run() {
-                            // Update the scanned IoT
-                            scanned_IBAN = barcodes.valueAt(0).rawValue;
-                            // Update the TextView
-                            barcodeInfo.setText(scanned_IBAN);
-
-                        }
-                    });
+                if (isQrCodeValid(barcodes)) {
+                    handleQrCodeDetection(barcodes);
                 }
+            }
 
+            private void handleQrCodeDetection(final SparseArray<Barcode> barcodes) {
+                // Use the post method of the TextView
+                qrCodeTextView.post(new Runnable() {
+                    public void run() {
+                        // Update the TextView
+                        scannedIban = barcodes.valueAt(0).rawValue;
+
+                        qrCodeTextView.setText(scannedIban);
+
+                        Intent trasferMoneyIntent = new Intent(getApplicationContext(), TransferMoneyActivity.class);
+                        trasferMoneyIntent.putExtra(IBAN, scannedIban);
+                        startActivity(trasferMoneyIntent);
+                    }
+                });
+            }
+
+            private boolean isQrCodeValid(SparseArray<Barcode> barcodes) {
+                return barcodes.size() != 0;
             }
         });
 
     }
-
-
-
-    public void showDetails(View view) {
-        if (scanned_IBAN != null){
-            Log.e(TAG, "Scanned IBAN: " + scanned_IBAN);
-            Intent trasferMoneyIntent = new Intent(this, TransferMoneyActivity.class);
-            trasferMoneyIntent.putExtra(IBAN, scanned_IBAN);
-            startActivity(trasferMoneyIntent);
-        } else {
-            Toast.makeText(
-                    ScanQRcodeActivity.this,
-                    R.string.nothing_scanned,
-                    Toast.LENGTH_SHORT)
-                    .show();
-        }
-
-    }
-
-
-
 }

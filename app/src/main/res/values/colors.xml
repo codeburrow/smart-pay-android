@@ -1,6 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+
     <color name="colorPrimary">#3F51B5</color>
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#FF4081</color>
+    <color name="colorAccentBlue">#add3fa</color>
+
+    <color name="colorNeutral">#1885F2</color>
+    <color name="colorNeutralLight">#75b6f7</color>
+
+    <!-- activity_payment layout's colors-->
+    <color name="colorBackground_payment">#f7fbff</color>
+    <color name="colorLabel_payment">#add3fa</color>
+    <color name="colorLabelStroke_payment">#75b6f7</color>
+    <color name="colorInfo_payment">#75b6f7</color>
+    <color name="colorInfoStroke_payment">#1885F2</color>
+    <color name="colorNoThanksButton_payment">@android:color/transparent</color>
+    <color name="colorNoThanksButtonPressed_payment">@android:color/transparent</color>
+    <color name="colorBuyButton_payment">#1885F2</color>
+    <color name="colorBuyButtonPressed_payment">#75b6f7</color>
+
 </resources>

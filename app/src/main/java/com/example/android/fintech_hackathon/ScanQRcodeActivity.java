@@ -19,10 +19,10 @@ import com.google.android.gms.vision.barcode.BarcodeDetector;
 
 import java.io.IOException;
 
-public class ScanQrCodeActivity extends AppCompatActivity {
+public class ScanQRcodeActivity extends AppCompatActivity {
 
     // LOG_TAG
-    private static final String TAG = ScanQrCodeActivity.class.getSimpleName();
+    private static final String TAG = ScanQRcodeActivity.class.getSimpleName();
     private static final String IBAN = "iban";
     // Request code for runtime permissions
     final private int REQUEST_CODE_ASK_PERMISSIONS = 123;

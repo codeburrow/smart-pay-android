@@ -18,9 +18,9 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.List;
 
-public class LogInActivity extends AppCompatActivity {
-    private static final String TAG = LogInActivity.class.getSimpleName();
-    private static final String API_KEY = "d8dd6ba4f73444f6b2ef5a92d1a98b6f";
+public class LoginActivity extends AppCompatActivity {
+    private static final String TAG = LoginActivity.class.getSimpleName();
+    public static final String API_KEY = "d8dd6ba4f73444f6b2ef5a92d1a98b6f";
 
     // EditText
     EditText loginEditText;

@@ -13,17 +13,18 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".LogInActivity" />
+        <activity android:name=".LoginActivity" />
         <activity android:name=".ChooseTransactionActivity" >
+        </activity>
+        <activity android:name=".ShowQRcodeActivity" />
+        <activity android:name=".ScanQRcodeActivity"/>
+        <activity android:name=".TransferMoneyActivity" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".ShowQRcodeActivity" />
-        <activity android:name=".ScanQRcodeActivity"/>
-        <activity android:name=".TransferMoneyActivity" />
     </application>
 
 </manifest>

@@ -1,6 +1,7 @@
 package com.example.android.fintech_hackathon;
 
 import android.Manifest;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
@@ -24,6 +25,7 @@ public class ScanQRcodeActivity extends AppCompatActivity {
 
     // LOG_TAG
     private static final String TAG = ScanQRcodeActivity.class.getSimpleName();
+    private static final String IBAN = "iban";
     // SurfaceView in order to display the preview frames captured by the camera.
     SurfaceView cameraView;
     // TextView to display the contents of the QR codes the API detects
@@ -141,8 +143,10 @@ public class ScanQRcodeActivity extends AppCompatActivity {
 
     public void showDetails(View view) {
         if (scanned_IBAN != null){
-            //ToDo an Intent to a new Activity should happen here
             Log.e(TAG, "Scanned IBAN: " + scanned_IBAN);
+            Intent transactionActivityIntent = new Intent(this, TransactionActivity.class);
+            transactionActivityIntent.putExtra(IBAN, scanned_IBAN);
+            startActivity(transactionActivityIntent);
         } else {
             Toast.makeText(
                     ScanQRcodeActivity.this,

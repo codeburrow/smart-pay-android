@@ -16,7 +16,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="61dp"
         android:ems="10"
-        android:text="Enter IBAN"
+        android:text="IBAN1124837027"
         android:inputType="text" />
 
 

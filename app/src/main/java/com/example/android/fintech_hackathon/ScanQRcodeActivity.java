@@ -144,9 +144,9 @@ public class ScanQRcodeActivity extends AppCompatActivity {
     public void showDetails(View view) {
         if (scanned_IBAN != null){
             Log.e(TAG, "Scanned IBAN: " + scanned_IBAN);
-            Intent transactionActivityIntent = new Intent(this, TransactionActivity.class);
-            transactionActivityIntent.putExtra(IBAN, scanned_IBAN);
-            startActivity(transactionActivityIntent);
+            Intent trasferMoneyIntent = new Intent(this, TransferMoneyActivity.class);
+            trasferMoneyIntent.putExtra(IBAN, scanned_IBAN);
+            startActivity(trasferMoneyIntent);
         } else {
             Toast.makeText(
                     ScanQRcodeActivity.this,

@@ -1,9 +1,11 @@
 package com.example.android.fintech_hackathon;
 
+import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.View;
 import android.widget.ImageView;
 
 import java.io.IOException;
@@ -37,4 +39,8 @@ public class ShowQRcodeActivity extends AppCompatActivity {
         }
     }
 
+    public void startAccountRefresh(View view) {
+        Intent refreshAccountIntent = new Intent(this, RefreshAccountActivity.class);
+        startActivity(refreshAccountIntent);
+    }
 }

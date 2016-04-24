@@ -7,25 +7,24 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context="com.example.android.fintech_hackathon.ShowQRcodeActivity">
+    tools:context="com.example.android.fintech_hackathon.RefreshAccountActivity">
 
-    <ImageView
-        android:id="@+id/imageView"
-        android:layout_width="200dp"
-        android:layout_height="200dp"
+    <TextView
+        android:id="@+id/refresh_info_text_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Loading.."
+        android:layout_centerHorizontal="true"
         android:layout_centerVertical="true"
-        android:layout_centerHorizontal="true" />
+        android:background="@drawable/rounded_text_view"/>
 
     <Button
-        android:id="@+id/check_account_button"
+        android:id="@+id/refresh_account_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:padding="20dp"
-        android:text="Check Account"
-        android:layout_below="@+id/imageView"
-        android:layout_centerHorizontal="true"
-        android:onClick="startAccountRefresh"
+        android:text="Refresh"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true"
         android:background="@drawable/rounded_button_states"
         />
 

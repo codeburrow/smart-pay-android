@@ -22,10 +22,21 @@
     <ImageButton
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/imageButton"
+        android:layout_margin = "16dp"
+        android:id="@+id/qr_button"
         android:src="@drawable/qr_button"
         android:onClick="showQRcode"
         android:layout_alignParentTop="true"
         android:layout_alignParentStart="true" />
+
+    <ImageButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/user_button"
+        android:onClick="showDetails"
+        android:src="@drawable/user_button"
+        android:layout_below="@+id/qr_button"
+        android:layout_alignStart="@+id/qr_button" />
+
 
 </RelativeLayout>

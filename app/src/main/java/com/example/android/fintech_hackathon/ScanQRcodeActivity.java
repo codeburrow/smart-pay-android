@@ -149,4 +149,9 @@ public class ScanQRcodeActivity extends AppCompatActivity {
         Intent showQRcodeIntent = new Intent(this, ShowQRcodeActivity.class);
         startActivity(showQRcodeIntent);
     }
+
+    public void showDetails(View view) {
+        Intent refreshAccountIntent = new Intent(this, RefreshAccountActivity.class);
+        startActivity(refreshAccountIntent);
+    }
 }

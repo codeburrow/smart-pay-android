@@ -17,4 +17,10 @@ public class SuccessfulTransactionActivity extends AppCompatActivity {
         Intent scanQRcodeIntent = new Intent(this, ScanQRcodeActivity.class);
         startActivity(scanQRcodeIntent);
     }
+
+    @Override
+    public void onBackPressed() {
+        Intent scanQRcodeIntent = new Intent(this, ScanQRcodeActivity.class);
+        startActivity(scanQRcodeIntent);
+    }
 }

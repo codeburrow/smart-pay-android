@@ -1,6 +1,7 @@
 package com.example.android.fintech_hackathon;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -65,6 +66,12 @@ public class RefreshAccountActivity extends AppCompatActivity {
             e.printStackTrace();
         }
         refreshedInformationTextView.setText(infoToShow);
+    }
+
+    @Override
+    public void onBackPressed() {
+        Intent scanQrCodeIntent = new Intent(this, ScanQRcodeActivity.class);
+        startActivity(scanQrCodeIntent);
     }
 
     private class RefreshAccountTask extends AsyncTask<String, Void, JSONObject> {

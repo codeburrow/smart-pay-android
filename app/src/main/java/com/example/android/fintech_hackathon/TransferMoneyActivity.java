@@ -29,7 +29,7 @@ public class TransferMoneyActivity extends AppCompatActivity {
     private static final String TRANSACTIONS_API_KEY = "transactions";
     private static final String UUID_API_KEY = "uuid";
     String qrCodeJson;
-    String uuid = "codeburrow";
+    String uuid = "codeburrow.com";
 
     String mIbanLookingFor;
 

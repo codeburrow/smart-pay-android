@@ -16,15 +16,27 @@
         <activity android:name=".LoginActivity" />
         <activity android:name=".ChooseTransactionActivity" />
         <activity android:name=".ShowQRcodeActivity" />
-        <activity android:name=".ScanQRcodeActivity"></activity>
-        <activity android:name=".TransferMoneyActivity">
+        <activity android:name=".ScanQRcodeActivity"
+            android:configChanges="orientation"
+            android:noHistory="true"
+            android:screenOrientation="portrait"
+            >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".TransferMoneyActivity"
+            android:configChanges="orientation"
+            android:noHistory="true"
+            android:screenOrientation="portrait"
+            />
         <activity android:name=".RefreshAccountActivity" />
+        <activity android:name=".SuccessfulTransactionActivity"
+            android:configChanges="orientation"
+            android:noHistory="true"
+            android:screenOrientation="portrait" />
     </application>
 
 </manifest>

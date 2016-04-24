@@ -4,6 +4,7 @@ import android.content.Context;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.widget.Toast;
 
 import org.apache.http.NameValuePair;
@@ -23,7 +24,6 @@ public class TransferMoneyActivity extends AppCompatActivity {
     private static final String IBAN = "iban";
     String qrCodeJson;
 
-    // the IBAN_API_KEY we are looking for
     String mIbanLookingFor;
 
     private String iban = "IBAN1124837027";
@@ -57,11 +57,14 @@ public class TransferMoneyActivity extends AppCompatActivity {
 
         mIbanLookingFor = iban;
 
-        CheckIbanAccountTask checkIBANAccountTask = new CheckIbanAccountTask();
-        checkIBANAccountTask.execute(LoginActivity.API_KEY, mIbanLookingFor);
+        CheckIbanAccountTask checkIbanAccountTask = new CheckIbanAccountTask();
+        checkIbanAccountTask.execute(LoginActivity.API_KEY_TOKEN, mIbanLookingFor);
 
-        CountTransactionsTask countTransactionsTask = new CountTransactionsTask();
-        countTransactionsTask.execute(LoginActivity.API_KEY);
+//        CountTransactionsTask countTransactionsTask = new CountTransactionsTask();
+//        countTransactionsTask.execute(LoginActivity.API_KEY_TOKEN);
+
+//        AttemptToMakeTransactionTask attemptToMakeTransactionTask = new AttemptToMakeTransactionTask();
+//        attemptToMakeTransactionTask.execute();
     }
 
     /**
@@ -84,7 +87,7 @@ public class TransferMoneyActivity extends AppCompatActivity {
         @Override
         protected JSONObject doInBackground(String... args) {
             // JSON Parser
-            JSONParser jsonParser = new JSONParser();
+            JsonParser jsonParser = new JsonParser();
             // GET url
             final String GET_ACCOUNTS_LIST_URL =
                     "https://nbgdemo.azure-api.net/testnodeapi/api/accounts/list";
@@ -147,7 +150,7 @@ public class TransferMoneyActivity extends AppCompatActivity {
         @Override
         protected String doInBackground(String... args) {
             // JSON Parser
-            JSONParser jsonParser = new JSONParser();
+            JsonParser jsonParser = new JsonParser();
             // GET url
             final String GET_TRANSACTIONS_LIST_URL =
                     "https://nbgdemo.azure-api.net/nodeopenapi/api/transactions/rest";
@@ -178,26 +181,38 @@ public class TransferMoneyActivity extends AppCompatActivity {
         }
     }
 
-    private class AttemptTransactionTask extends AsyncTask<Void, Void, Void>{
+    private class AttemptToMakeTransactionTask extends AsyncTask<Void, Void, JSONObject> {
 
-        private final String TAG = AttemptTransactionTask.class.getSimpleName();
+        private final String TAG = AttemptToMakeTransactionTask.class.getSimpleName();
 
         @Override
-        protected Void doInBackground(Void... args) {
+        protected JSONObject doInBackground(Void... args) {
             String setTransactionUrl =
-                    "https://nbgdemo.azure-api.net/nodeopenapi/api/transactions/rest";
-            JSONParser jsonParser = new JSONParser();
+                    "https://nbgdemo.azure-api.net/testnodeapi/api/transactions/set";
+            JsonParser jsonParser = new JsonParser();
 
             List<NameValuePair> params = new ArrayList<NameValuePair>();
+
+            params.add(new BasicNameValuePair("key", LoginActivity.API_KEY_TOKEN));
             params.add(new BasicNameValuePair("nbgtrackid", "15145645"));
-            params.add(new BasicNameValuePair("payload", "15145645"));
+            params.add(new BasicNameValuePair("payload[insert][uuid]", "443d9a28-34de-4496-badf-6e1f13ac04af"));
+            params.add(new BasicNameValuePair("payload[insert][details][posted_by_user_id]", "571a162f95806d5414110f20"));
+            params.add(new BasicNameValuePair("payload[insert][details][approved_by_user_id]", "571b6c423ddcdb580cbee7db"));
+            params.add(new BasicNameValuePair("payload[insert][details][value][amount]", "200"));
 
-            JSONObject jsonResponse = jsonParser.makeHttpRequest(setTransactionUrl, "PUT", params);
+            JSONObject jsonResponse = jsonParser.makeHttpRequest(setTransactionUrl, "POST", params);
 
+            return jsonResponse;
+        }
 
-
-            return null;
+        @Override
+        protected void onPostExecute(JSONObject httpResponseJsonObject) {
+            try {
+                toast(httpResponseJsonObject.getString("ok") + "");
+                toast(httpResponseJsonObject.toString());
+            } catch (JSONException e) {
+                toast(e.getMessage());
+            }
         }
     }
-
 }

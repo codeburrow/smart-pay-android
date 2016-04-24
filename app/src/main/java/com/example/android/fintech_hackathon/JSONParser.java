@@ -11,7 +11,9 @@ import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.client.methods.HttpPut;
 import org.apache.http.client.utils.URLEncodedUtils;
+import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.message.BasicHeader;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.json.JSONStringer;
@@ -32,7 +34,8 @@ import java.util.List;
     }
  */
 
-public class JSONParser {
+public class JsonParser {
+    private static final String TAG = JsonParser.class.getSimpleName();
 
     static InputStream httpEntityContent = null;
     static JSONObject jsonObject = null;
@@ -40,7 +43,7 @@ public class JSONParser {
 
 
     // Constructor
-    public JSONParser() {
+    public JsonParser() {
 
     }
 
@@ -101,6 +104,7 @@ public class JSONParser {
             if (method.equalsIgnoreCase("POST")) {
                 HttpPost httpPost = new HttpPost(url);
                 httpPost.setEntity(new UrlEncodedFormEntity(params, "UTF-8"));
+
                 HttpResponse httpResponse = httpClient.execute(httpPost);
                 HttpEntity httpEntity = httpResponse.getEntity();
                 httpEntityContent = httpEntity.getContent();
@@ -115,18 +119,26 @@ public class JSONParser {
                 httpEntityContent = httpEntity.getContent();
             } else if (method.equalsIgnoreCase("PUT")) {
                 HttpPut httpPut = new HttpPut(url);
-                JSONStringer jsonStringer = new JSONStringer()
-                        .object()
-                        .key(params.get(0).getName())
-                        .value(params.get(0).getValue())
-                        .endObject();
-                httpPut.setEntity(new UrlEncodedFormEntity(params, "UTF-8"));
+                JSONStringer jsonStringer = new JSONStringer();
+
+                for (NameValuePair param : params) {
+                    Log.e(TAG, "Debugging: " + param.getValue());
+                    jsonStringer
+                            .object()
+                            .key(param.getName())
+                            .value(param.getValue())
+                            .endObject();
+                }
+
+
+                StringEntity stringEntity = new StringEntity(jsonStringer.toString());
+                stringEntity.setContentEncoding(new BasicHeader("Ocp-Apim-Subscription-Key", LoginActivity.API_KEY_TOKEN));
+                httpPut.setEntity(stringEntity);
 
                 HttpResponse httpResponse = httpClient.execute(httpPut);
                 HttpEntity httpEntity = httpResponse.getEntity();
                 httpEntityContent = httpEntity.getContent();
             }
-
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
         } catch (ClientProtocolException e) {

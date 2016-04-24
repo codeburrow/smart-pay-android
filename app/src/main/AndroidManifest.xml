@@ -14,11 +14,13 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity android:name=".LoginActivity" />
-        <activity android:name=".ChooseTransactionActivity" >
-        </activity>
+        <activity android:name=".ChooseTransactionActivity"></activity>
         <activity android:name=".ShowQRcodeActivity" />
-        <activity android:name=".ScanQRcodeActivity"/>
-        <activity android:name=".TransferMoneyActivity" >
+        <activity android:name=".ScanQRcodeActivity" />
+        <activity android:name=".TransferMoneyActivity">
+
+        </activity>
+        <activity android:name=".RefreshAccountActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

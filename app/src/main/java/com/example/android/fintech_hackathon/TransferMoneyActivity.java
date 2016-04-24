@@ -8,6 +8,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import org.apache.http.NameValuePair;
@@ -36,6 +37,7 @@ public class TransferMoneyActivity extends AppCompatActivity {
     private String amountOfMoney;// = "20";
     private JSONObject mAccountToSendMoney;
     private EditText passEditText;
+    private TextView infoTextView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,6 +45,8 @@ public class TransferMoneyActivity extends AppCompatActivity {
         setContentView(R.layout.activity_transaction);
 
         passEditText = (EditText) findViewById(R.id.password_edittext);
+
+        infoTextView = (TextView) findViewById(R.id.info_text_view);
 
         Intent transferMoneyIntent = getIntent();
 
@@ -54,6 +58,7 @@ public class TransferMoneyActivity extends AppCompatActivity {
             iban = qrCodeJsonObject.getString(IBAN_QR_CODE_JSON_KEY);
             amountOfMoney = qrCodeJsonObject.getString(AMOUNT_OF_MONEY_QR_CODE_KEY);
 
+            infoTextView.setText("Send to\nIBAN: " + iban + "\nThe amount of: " + amountOfMoney + "$");
         } catch (JSONException e) {
             toast("System Error");
             e.printStackTrace();

@@ -1,11 +1,11 @@
 package com.example.android.fintech_hackathon;
 
-import android.content.Context;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.widget.Toast;
+import android.util.Log;
 
+import org.apache.http.HttpEntity;
 import org.apache.http.NameValuePair;
 import org.apache.http.message.BasicNameValuePair;
 import org.json.JSONArray;
@@ -59,11 +59,11 @@ public class TransferMoneyActivity extends AppCompatActivity {
 
         mIbanLookingFor = iban;
 
-        CheckIbanAccountTask checkIbanAccountTask = new CheckIbanAccountTask();
-        checkIbanAccountTask.execute(LoginActivity.API_KEY_TOKEN, mIbanLookingFor);
+//        CheckIbanAccountTask checkIbanAccountTask = new CheckIbanAccountTask();
+//        checkIbanAccountTask.execute(LoginActivity.API_KEY_TOKEN, mIbanLookingFor);
 
-        CountTransactionsTask countTransactionsTask = new CountTransactionsTask();
-        countTransactionsTask.execute(LoginActivity.API_KEY_TOKEN);
+//        CountTransactionsTask countTransactionsTask = new CountTransactionsTask();
+//        countTransactionsTask.execute(LoginActivity.API_KEY_TOKEN);
 
         AttemptToMakeTransactionTask attemptToMakeTransactionTask = new AttemptToMakeTransactionTask();
         attemptToMakeTransactionTask.execute();
@@ -73,12 +73,12 @@ public class TransferMoneyActivity extends AppCompatActivity {
      * @param message
      */
     private void toast(String message) {
-        Context context = getApplicationContext();
-        CharSequence text = message;
-        int duration = Toast.LENGTH_SHORT;
-
-        Toast toast = Toast.makeText(context, text, duration);
-        toast.show();
+//        Context context = getApplicationContext();
+//        CharSequence text = message;
+//        int duration = Toast.LENGTH_SHORT;
+//
+//        Toast toast = Toast.makeText(context, text, duration);
+//        toast.show();
     }
 
     private JSONObject findTransactionByUuid(JSONArray transactions, String uuid) throws JSONException {
@@ -197,40 +197,52 @@ public class TransferMoneyActivity extends AppCompatActivity {
         }
     }
 
-    private class AttemptToMakeTransactionTask extends AsyncTask<Void, Void, JSONObject> {
+    private class AttemptToMakeTransactionTask extends AsyncTask<Void, Void, HttpEntity> {
         private final String TAG = AttemptToMakeTransactionTask.class.getSimpleName();
 
         @Override
-        protected JSONObject doInBackground(Void... args) {
+        protected HttpEntity doInBackground(Void... args) {
             String setTransactionUrl =
-                    "https://nbgdemo.azure-api.net/testnodeapi/api/transactions/set";
+                    "https://nbgdemo.azure-api.net/nodeopenapi/api/transactions/rest";
             JsonParser jsonParser = new JsonParser();
 
-            List<NameValuePair> params = new ArrayList<NameValuePair>();
             String uuid = "443d9a28-34de-4496-badf-6e1f13ac04af-2";
             String nbgTrackId = UUID.randomUUID().toString();
 
-            params.add(new BasicNameValuePair("key", LoginActivity.API_KEY_TOKEN));
-            params.add(new BasicNameValuePair("nbgtrackid", nbgTrackId));
-            params.add(new BasicNameValuePair("payload[insert][uuid]", uuid));
-            params.add(new BasicNameValuePair("payload[insert][details][posted_by_user_id]", "571a162f95806d5414110f20"));
-            params.add(new BasicNameValuePair("payload[insert][details][approved_by_user_id]", "571b6c423ddcdb580cbee7db"));
-            params.add(new BasicNameValuePair("payload[insert][details][value][amount]", "200"));
+            JSONObject jsonParams = new JSONObject();
+            JSONObject jsonPayload = new JSONObject();
+            JSONObject jsonInsert = new JSONObject();
+            JSONObject jsonDetails = new JSONObject();
+            JSONObject jsonValue = new JSONObject();
 
-            JSONObject jsonResponse = jsonParser.makeHttpRequest(setTransactionUrl, "POST", params);
+            try {
+                jsonValue.put("amount", "200");
+                jsonDetails.put("value", jsonValue);
+                jsonDetails.put("posted_by_user_id", "571a162f95806d5414110f20");
+                jsonDetails.put("approved_by_user_id", "571b6c423ddcdb580cbee7db");
+                jsonInsert.put("details", jsonDetails);
+                jsonInsert.put("uuid", uuid);
+                jsonPayload.put("insert", jsonInsert);
+                jsonParams.put("payload", jsonPayload);
+                jsonParams.put("nbgtrackid", nbgTrackId);
+            } catch (JSONException e) {
+                e.printStackTrace();
+                Log.e(TAG, e.getMessage());
+            }
 
-            return jsonResponse;
+            JSONObject manJson = new JSONObject();
+
+//            params.add(new BasicNameValuePair("payload[insert][uuid]", uuid));
+//            params.add(new BasicNameValuePair("payload[insert][details][posted_by_user_id]", "571a162f95806d5414110f20"));
+//            params.add(new BasicNameValuePair("payload[insert][details][approved_by_user_id]", "571b6c423ddcdb580cbee7db"));
+//            params.add(new BasicNameValuePair("payload[insert][details][value][amount]", "200"));
+
+            return jsonParser.makePutRequest(setTransactionUrl, jsonParams);
         }
 
         @Override
-        protected void onPostExecute(JSONObject transactionJsonObject) {
-            if (null == transactionJsonObject) {
-                toast("Transaction failed.");
-            } else if (!transactionJsonObject.has("ok")) {
-                toast("System error.");
-            } else {
-                toast("Transaction failed.");
-            }
+        protected void onPostExecute(HttpEntity apiHttpEntitny) {
+//            Log.e(TAG, apiHttpEntitny.toString());
         }
     }
 }

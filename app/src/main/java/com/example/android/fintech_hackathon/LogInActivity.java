@@ -19,7 +19,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class LoginActivity extends AppCompatActivity {
-    public static final String API_KEY_TOKEN = "f6ae315318674a1aafe0282bd455a30a";
+    public static final String API_KEY_TOKEN = "1fe7745e3af64f1f90dff31965dbe2a8";
     private static final String TAG = LoginActivity.class.getSimpleName();
     // EditText
     EditText loginEditText;

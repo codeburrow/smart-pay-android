@@ -14,9 +14,9 @@ import org.apache.http.client.utils.URLEncodedUtils;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.message.BasicHeader;
+import org.apache.http.util.EntityUtils;
 import org.json.JSONException;
 import org.json.JSONObject;
-import org.json.JSONStringer;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -114,34 +114,9 @@ public class JsonParser {
                 HttpResponse httpResponse = httpClient.execute(httpGet);
                 HttpEntity httpEntity = httpResponse.getEntity();
                 httpEntityContent = httpEntity.getContent();
-            } else if (method.equalsIgnoreCase("PUT")) {
-                HttpPut httpPut = new HttpPut(url);
-                JSONStringer jsonStringer = new JSONStringer();
-
-                for (NameValuePair param : params) {
-                    jsonStringer
-                            .object()
-                            .key(param.getName())
-                            .value(param.getValue())
-                            .endObject();
-                }
-
-                StringEntity stringEntity = new StringEntity(jsonStringer.toString());
-                stringEntity.setContentEncoding(new BasicHeader("Ocp-Apim-Subscription-Key", LoginActivity.API_KEY_TOKEN));
-                httpPut.setEntity(stringEntity);
-
-                HttpResponse httpResponse = httpClient.execute(httpPut);
-                HttpEntity httpEntity = httpResponse.getEntity();
-                httpEntityContent = httpEntity.getContent();
             }
-        } catch (UnsupportedEncodingException e) {
-            e.printStackTrace();
-        } catch (ClientProtocolException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (JSONException e) {
-            e.printStackTrace();
+        } catch (Exception e) {
+            Log.e(TAG, e.getMessage());
         }
 
         try {
@@ -170,4 +145,29 @@ public class JsonParser {
 
     }
 
+    public HttpEntity makePutRequest(String setTransactionUrl, JSONObject jsonParams) {
+        HttpPut httpPut = new HttpPut(setTransactionUrl);
+        httpPut.setHeader("Content-Type", "application/json");
+        httpPut.setHeader("Ocp-Apim-Subscription-Key", LoginActivity.API_KEY_TOKEN);
+
+        StringEntity stringEntity = null;
+        try {
+            stringEntity = new StringEntity(jsonParams.toString());
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+            Log.e(TAG, e.getMessage());
+        }
+        httpPut.setEntity(stringEntity);
+
+        DefaultHttpClient httpClient = new DefaultHttpClient();
+        HttpResponse httpResponse = null;
+        try {
+            httpResponse = httpClient.execute(httpPut);
+            return httpResponse.getEntity();
+        } catch (Exception e) {
+            e.printStackTrace();
+            Log.e(TAG, e.getMessage());
+        }
+        return null;
+    }
 }

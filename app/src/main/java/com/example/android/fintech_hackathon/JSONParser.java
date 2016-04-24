@@ -98,6 +98,9 @@ public class JsonParser {
             if (method.equalsIgnoreCase("POST")) {
                 HttpPost httpPost = new HttpPost(url);
                 httpPost.setEntity(new UrlEncodedFormEntity(params, "UTF-8"));
+                httpPost.setHeader(new BasicHeader("Ocp-Apim-Subscription-Key", LoginActivity.API_KEY_TOKEN));
+
+                Log.e(TAG, "data: " + params);
 
                 HttpResponse httpResponse = httpClient.execute(httpPost);
                 HttpEntity httpEntity = httpResponse.getEntity();
@@ -116,14 +119,12 @@ public class JsonParser {
                 JSONStringer jsonStringer = new JSONStringer();
 
                 for (NameValuePair param : params) {
-                    Log.e(TAG, "Debugging: " + param.getValue());
                     jsonStringer
                             .object()
                             .key(param.getName())
                             .value(param.getValue())
                             .endObject();
                 }
-
 
                 StringEntity stringEntity = new StringEntity(jsonStringer.toString());
                 stringEntity.setContentEncoding(new BasicHeader("Ocp-Apim-Subscription-Key", LoginActivity.API_KEY_TOKEN));

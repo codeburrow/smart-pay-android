@@ -14,21 +14,25 @@
         android:id="@+id/scan_QRcode_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:padding="20dp"
         android:text="Give Money"
         android:layout_above="@+id/show_QRcode_button"
         android:layout_centerHorizontal="true"
         android:onClick="scanQRcode"
+        android:background="@drawable/rounded_button_states"
         />
 
     <Button
         android:id="@+id/show_QRcode_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:padding="20dp"
         android:layout_marginTop="16dp"
         android:text="Ask Money"
         android:layout_centerVertical="true"
         android:layout_centerHorizontal="true"
         android:onClick="showQRcode"
+        android:background="@drawable/rounded_button_states"
         />
 
 </RelativeLayout>

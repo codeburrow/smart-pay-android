@@ -10,6 +10,7 @@ import android.util.Log;
 import android.util.SparseArray;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
+import android.view.View;
 import android.widget.TextView;
 
 import com.google.android.gms.vision.CameraSource;
@@ -142,5 +143,10 @@ public class ScanQRcodeActivity extends AppCompatActivity {
             }
         });
 
+    }
+
+    public void showQRcode(View view) {
+        Intent showQRcodeIntent = new Intent(this, ShowQRcodeActivity.class);
+        startActivity(showQRcodeIntent);
     }
 }

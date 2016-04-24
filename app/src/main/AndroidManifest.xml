@@ -16,17 +16,15 @@
         <activity android:name=".LoginActivity" />
         <activity android:name=".ChooseTransactionActivity"></activity>
         <activity android:name=".ShowQRcodeActivity" />
-        <activity android:name=".ScanQRcodeActivity" />
-        <activity android:name=".TransferMoneyActivity">
-
-        </activity>
-        <activity android:name=".RefreshAccountActivity">
+        <activity android:name=".ScanQRcodeActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".TransferMoneyActivity" />
+        <activity android:name=".RefreshAccountActivity" />
     </application>
 
 </manifest>

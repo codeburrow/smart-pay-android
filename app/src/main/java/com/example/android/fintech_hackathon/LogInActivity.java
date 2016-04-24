@@ -19,7 +19,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class LoginActivity extends AppCompatActivity {
-    public static final String API_KEY = "d8dd6ba4f73444f6b2ef5a92d1a98b6f";
+    public static final String API_KEY_TOKEN = "f6ae315318674a1aafe0282bd455a30a";
     private static final String TAG = LoginActivity.class.getSimpleName();
     // EditText
     EditText loginEditText;
@@ -41,7 +41,7 @@ public class LoginActivity extends AppCompatActivity {
             public void onClick(View v) {
                 mIbanLookingFor = loginEditText.getText().toString();
                 CheckIbanAccountTask checkIBANAccountTask = new CheckIbanAccountTask();
-                checkIBANAccountTask.execute(API_KEY, mIbanLookingFor);
+                checkIBANAccountTask.execute(API_KEY_TOKEN, mIbanLookingFor);
             }
         });
     }
@@ -53,17 +53,13 @@ public class LoginActivity extends AppCompatActivity {
 
         @Override
         protected JSONObject doInBackground(String... args) {
-            // JSON Parser
-            JSONParser jsonParser = new JSONParser();
-            // GET url
+            JsonParser jsonParser = new JsonParser();
             final String GET_ACCOUNTS_LIST_URL =
                     "https://nbgdemo.azure-api.net/testnodeapi/api/accounts/list";
 
-            // Building Parameters
             List<NameValuePair> params = new ArrayList<NameValuePair>();
             params.add(new BasicNameValuePair("key", args[0]));
 
-            // Make Http GET Request
             JSONObject jsonResponse = jsonParser.makeHttpRequest(GET_ACCOUNTS_LIST_URL, "GET", params);
 
             try {

@@ -4,9 +4,9 @@ import android.content.Context;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import org.apache.http.NameValuePair;
@@ -22,6 +22,7 @@ public class RefreshAccountActivity extends AppCompatActivity {
     // the IBAN_API_KEY we are looking for
     String mIbanLookingFor = "IBAN1124837027";
 
+    TextView refreshedInformationTextView;
     Button refreshAccountButton;
 
     @Override
@@ -29,17 +30,19 @@ public class RefreshAccountActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_refresh_account);
 
+        refreshedInformationTextView = (TextView) findViewById(R.id.refresh_info_text_view);
+
         refreshAccountButton = (Button) findViewById(R.id.refresh_account_button);
         refreshAccountButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 RefreshAccountTask refreshAccountTask = new RefreshAccountTask();
-                refreshAccountTask.execute(LoginActivity.API_KEY, mIbanLookingFor);
+                refreshAccountTask.execute(LoginActivity.API_KEY_TOKEN, mIbanLookingFor);
             }
         });
 
         RefreshAccountTask refreshAccountTask = new RefreshAccountTask();
-        refreshAccountTask.execute(LoginActivity.API_KEY, mIbanLookingFor);
+        refreshAccountTask.execute(LoginActivity.API_KEY_TOKEN, mIbanLookingFor);
     }
 
     /**
@@ -54,8 +57,14 @@ public class RefreshAccountActivity extends AppCompatActivity {
         toast.show();
     }
 
-    private void updateTextView(String text){
-
+    private void updateTextView(JSONObject account){
+        String infoToShow = "Your Balance: ";
+        try {
+            infoToShow += account.getString("balance");
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        refreshedInformationTextView.setText(infoToShow);
     }
 
     private class RefreshAccountTask extends AsyncTask<String, Void, JSONObject> {
@@ -66,7 +75,7 @@ public class RefreshAccountActivity extends AppCompatActivity {
         @Override
         protected JSONObject doInBackground(String... args) {
             // JSON Parser
-            JSONParser jsonParser = new JSONParser();
+            JsonParser jsonParser = new JsonParser();
             // GET url
             final String GET_ACCOUNTS_LIST_URL =
                     "https://nbgdemo.azure-api.net/testnodeapi/api/accounts/list";
@@ -94,12 +103,7 @@ public class RefreshAccountActivity extends AppCompatActivity {
             if (null == account) {
                 toast("Account not found.");
             } else {
-                try {
-                    toast("Account found. id: " + account.getString("id"));
-                } catch (JSONException e) {
-                    toast("Unable to get account id.");
-                }
-
+                updateTextView(account);
             }
         }
 
@@ -110,7 +114,6 @@ public class RefreshAccountActivity extends AppCompatActivity {
                 JSONObject account = accounts.getJSONObject(index);
 
                 iban = account.getString(IBAN_API_KEY);
-                Log.e(LOG_TAG, iban);
 
                 if (iban.equalsIgnoreCase(mIbanLookingFor)) {
                     return account;

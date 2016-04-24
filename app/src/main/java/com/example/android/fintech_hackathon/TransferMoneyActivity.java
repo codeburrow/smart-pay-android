@@ -64,6 +64,9 @@ public class TransferMoneyActivity extends AppCompatActivity {
         countTransactionsTask.execute(LoginActivity.API_KEY);
     }
 
+    /**
+     * @param message
+     */
     private void toast(String message) {
         Context context = getApplicationContext();
         CharSequence text = message;
@@ -146,14 +149,14 @@ public class TransferMoneyActivity extends AppCompatActivity {
             // JSON Parser
             JSONParser jsonParser = new JSONParser();
             // GET url
-            final String GET_ACCOUNTS_LIST_URL =
+            final String GET_TRANSACTIONS_LIST_URL =
                     "https://nbgdemo.azure-api.net/nodeopenapi/api/transactions/rest";
 
             // Building Parameters
             List<NameValuePair> params = new ArrayList<NameValuePair>();
             params.add(new BasicNameValuePair("key", args[0]));
 
-            JSONObject jsonResponse = jsonParser.makeHttpRequest(GET_ACCOUNTS_LIST_URL, "GET", params);
+            JSONObject jsonResponse = jsonParser.makeHttpRequest(GET_TRANSACTIONS_LIST_URL, "GET", params);
 
             try {
                 JSONArray transactions = jsonResponse.getJSONArray(TRANSACTIONS_API_KEY);
@@ -174,4 +177,27 @@ public class TransferMoneyActivity extends AppCompatActivity {
             }
         }
     }
+
+    private class AttemptTransactionTask extends AsyncTask<Void, Void, Void>{
+
+        private final String TAG = AttemptTransactionTask.class.getSimpleName();
+
+        @Override
+        protected Void doInBackground(Void... args) {
+            String setTransactionUrl =
+                    "https://nbgdemo.azure-api.net/nodeopenapi/api/transactions/rest";
+            JSONParser jsonParser = new JSONParser();
+
+            List<NameValuePair> params = new ArrayList<NameValuePair>();
+            params.add(new BasicNameValuePair("nbgtrackid", "15145645"));
+            params.add(new BasicNameValuePair("payload", "15145645"));
+
+            JSONObject jsonResponse = jsonParser.makeHttpRequest(setTransactionUrl, "PUT", params);
+
+
+
+            return null;
+        }
+    }
+
 }

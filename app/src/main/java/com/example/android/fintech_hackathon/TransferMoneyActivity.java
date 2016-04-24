@@ -5,7 +5,6 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 
-import org.apache.http.HttpEntity;
 import org.apache.http.NameValuePair;
 import org.apache.http.message.BasicNameValuePair;
 import org.json.JSONArray;
@@ -197,11 +196,11 @@ public class TransferMoneyActivity extends AppCompatActivity {
         }
     }
 
-    private class AttemptToMakeTransactionTask extends AsyncTask<Void, Void, HttpEntity> {
+    private class AttemptToMakeTransactionTask extends AsyncTask<Void, Void, String> {
         private final String TAG = AttemptToMakeTransactionTask.class.getSimpleName();
 
         @Override
-        protected HttpEntity doInBackground(Void... args) {
+        protected String doInBackground(Void... args) {
             String setTransactionUrl =
                     "https://nbgdemo.azure-api.net/nodeopenapi/api/transactions/rest";
             JsonParser jsonParser = new JsonParser();
@@ -241,8 +240,13 @@ public class TransferMoneyActivity extends AppCompatActivity {
         }
 
         @Override
-        protected void onPostExecute(HttpEntity apiHttpEntitny) {
-//            Log.e(TAG, apiHttpEntitny.toString());
+        protected void onPostExecute(String apiResponse) {
+            if (null == apiResponse) {
+                toast("Transaction failed.");
+            } else {
+                toast(apiResponse);
+                Log.e(TAG, apiResponse);
+            }
         }
     }
 }

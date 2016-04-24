@@ -145,7 +145,7 @@ public class JsonParser {
 
     }
 
-    public HttpEntity makePutRequest(String setTransactionUrl, JSONObject jsonParams) {
+    public String makePutRequest(String setTransactionUrl, JSONObject jsonParams) {
         HttpPut httpPut = new HttpPut(setTransactionUrl);
         httpPut.setHeader("Content-Type", "application/json");
         httpPut.setHeader("Ocp-Apim-Subscription-Key", LoginActivity.API_KEY_TOKEN);
@@ -163,7 +163,7 @@ public class JsonParser {
         HttpResponse httpResponse = null;
         try {
             httpResponse = httpClient.execute(httpPut);
-            return httpResponse.getEntity();
+            return EntityUtils.toString(httpResponse.getEntity());
         } catch (Exception e) {
             e.printStackTrace();
             Log.e(TAG, e.getMessage());

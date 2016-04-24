@@ -57,14 +57,14 @@ public class TransferMoneyActivity extends AppCompatActivity {
 
         mIbanLookingFor = iban;
 
-        CheckIbanAccountTask checkIbanAccountTask = new CheckIbanAccountTask();
-        checkIbanAccountTask.execute(LoginActivity.API_KEY_TOKEN, mIbanLookingFor);
+//        CheckIbanAccountTask checkIbanAccountTask = new CheckIbanAccountTask();
+//        checkIbanAccountTask.execute(LoginActivity.API_KEY_TOKEN, mIbanLookingFor);
 
 //        CountTransactionsTask countTransactionsTask = new CountTransactionsTask();
 //        countTransactionsTask.execute(LoginActivity.API_KEY_TOKEN);
 
-//        AttemptToMakeTransactionTask attemptToMakeTransactionTask = new AttemptToMakeTransactionTask();
-//        attemptToMakeTransactionTask.execute();
+        AttemptToMakeTransactionTask attemptToMakeTransactionTask = new AttemptToMakeTransactionTask();
+        attemptToMakeTransactionTask.execute();
     }
 
     /**

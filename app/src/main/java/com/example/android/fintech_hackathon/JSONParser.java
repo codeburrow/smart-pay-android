@@ -41,12 +41,6 @@ public class JsonParser {
     static JSONObject jsonObject = null;
     static String json = "";
 
-
-    // Constructor
-    public JsonParser() {
-
-    }
-
     /**
      * @param url
      * @return

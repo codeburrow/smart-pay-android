@@ -14,6 +14,7 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 public class TransferMoneyActivity extends AppCompatActivity {
 
@@ -80,8 +81,7 @@ public class TransferMoneyActivity extends AppCompatActivity {
         toast.show();
     }
 
-    private JSONObject findTransactionByUuid(JSONArray transactions) throws JSONException {
-        String uuid;
+    private JSONObject findTransactionByUuid(JSONArray transactions, String uuid) throws JSONException {
 
         for (int index = 0; index <= transactions.length(); index++) {
             JSONObject transaction = transactions.getJSONObject(index);
@@ -207,33 +207,29 @@ public class TransferMoneyActivity extends AppCompatActivity {
             JsonParser jsonParser = new JsonParser();
 
             List<NameValuePair> params = new ArrayList<NameValuePair>();
+            String uuid = "443d9a28-34de-4496-badf-6e1f13ac04af-2";
+            String nbgTrackId = UUID.randomUUID().toString();
 
             params.add(new BasicNameValuePair("key", LoginActivity.API_KEY_TOKEN));
-            params.add(new BasicNameValuePair("nbgtrackid", "15145645"));
-            params.add(new BasicNameValuePair("payload[insert][uuid]", "443d9a28-34de-4496-badf-6e1f13ac04af"));
+            params.add(new BasicNameValuePair("nbgtrackid", nbgTrackId));
+            params.add(new BasicNameValuePair("payload[insert][uuid]", uuid));
             params.add(new BasicNameValuePair("payload[insert][details][posted_by_user_id]", "571a162f95806d5414110f20"));
             params.add(new BasicNameValuePair("payload[insert][details][approved_by_user_id]", "571b6c423ddcdb580cbee7db"));
             params.add(new BasicNameValuePair("payload[insert][details][value][amount]", "200"));
 
-            JSONObject jsonResponse = jsonParser.makeHttpRequest(setTransactionUrl, "PUT", params);
+            JSONObject jsonResponse = jsonParser.makeHttpRequest(setTransactionUrl, "POST", params);
 
-            try {
-                JSONArray transactions = jsonResponse.getJSONArray(TRANSACTIONS_API_KEY);
-
-                return findTransactionByUuid(transactions);
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
-            return null;
+            return jsonResponse;
         }
 
         @Override
         protected void onPostExecute(JSONObject transactionJsonObject) {
             if (null == transactionJsonObject) {
-                toast("Transaction verified.");
+                toast("Transaction failed.");
+            } else if (!transactionJsonObject.has("ok")) {
+                toast("System error.");
             } else {
                 toast("Transaction failed.");
-//                toast(transactionJsonObject.get());
             }
         }
     }

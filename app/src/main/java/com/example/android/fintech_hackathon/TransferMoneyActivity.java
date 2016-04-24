@@ -4,7 +4,6 @@ import android.content.Context;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.widget.Toast;
 
 import org.apache.http.NameValuePair;
@@ -22,6 +21,8 @@ public class TransferMoneyActivity extends AppCompatActivity {
     public static final String AMOUNT_OF_MONEY_QR_CODE_KEY = "amount-of-money";
     private static final String TAG = TransferMoneyActivity.class.getSimpleName();
     private static final String IBAN = "iban";
+    private static final String TRANSACTIONS_API_KEY = "transactions";
+    private static final String UUID_API_KEY = "uuid";
     String qrCodeJson;
 
     String mIbanLookingFor;
@@ -57,11 +58,11 @@ public class TransferMoneyActivity extends AppCompatActivity {
 
         mIbanLookingFor = iban;
 
-//        CheckIbanAccountTask checkIbanAccountTask = new CheckIbanAccountTask();
-//        checkIbanAccountTask.execute(LoginActivity.API_KEY_TOKEN, mIbanLookingFor);
+        CheckIbanAccountTask checkIbanAccountTask = new CheckIbanAccountTask();
+        checkIbanAccountTask.execute(LoginActivity.API_KEY_TOKEN, mIbanLookingFor);
 
-//        CountTransactionsTask countTransactionsTask = new CountTransactionsTask();
-//        countTransactionsTask.execute(LoginActivity.API_KEY_TOKEN);
+        CountTransactionsTask countTransactionsTask = new CountTransactionsTask();
+        countTransactionsTask.execute(LoginActivity.API_KEY_TOKEN);
 
         AttemptToMakeTransactionTask attemptToMakeTransactionTask = new AttemptToMakeTransactionTask();
         attemptToMakeTransactionTask.execute();
@@ -77,6 +78,21 @@ public class TransferMoneyActivity extends AppCompatActivity {
 
         Toast toast = Toast.makeText(context, text, duration);
         toast.show();
+    }
+
+    private JSONObject findTransactionByUuid(JSONArray transactions) throws JSONException {
+        String uuid;
+
+        for (int index = 0; index <= transactions.length(); index++) {
+            JSONObject transaction = transactions.getJSONObject(index);
+
+            uuid = transaction.getString(UUID_API_KEY);
+
+            if (uuid.equalsIgnoreCase(mIbanLookingFor)) {
+                return transaction;
+            }
+        }
+        return null;
     }
 
     private class CheckIbanAccountTask extends AsyncTask<String, Void, JSONObject> {
@@ -182,7 +198,6 @@ public class TransferMoneyActivity extends AppCompatActivity {
     }
 
     private class AttemptToMakeTransactionTask extends AsyncTask<Void, Void, JSONObject> {
-
         private final String TAG = AttemptToMakeTransactionTask.class.getSimpleName();
 
         @Override
@@ -200,18 +215,25 @@ public class TransferMoneyActivity extends AppCompatActivity {
             params.add(new BasicNameValuePair("payload[insert][details][approved_by_user_id]", "571b6c423ddcdb580cbee7db"));
             params.add(new BasicNameValuePair("payload[insert][details][value][amount]", "200"));
 
-            JSONObject jsonResponse = jsonParser.makeHttpRequest(setTransactionUrl, "POST", params);
+            JSONObject jsonResponse = jsonParser.makeHttpRequest(setTransactionUrl, "PUT", params);
 
-            return jsonResponse;
+            try {
+                JSONArray transactions = jsonResponse.getJSONArray(TRANSACTIONS_API_KEY);
+
+                return findTransactionByUuid(transactions);
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+            return null;
         }
 
         @Override
-        protected void onPostExecute(JSONObject httpResponseJsonObject) {
-            try {
-                toast(httpResponseJsonObject.getString("ok") + "");
-                toast(httpResponseJsonObject.toString());
-            } catch (JSONException e) {
-                toast(e.getMessage());
+        protected void onPostExecute(JSONObject transactionJsonObject) {
+            if (null == transactionJsonObject) {
+                toast("Transaction verified.");
+            } else {
+                toast("Transaction failed.");
+//                toast(transactionJsonObject.get());
             }
         }
     }

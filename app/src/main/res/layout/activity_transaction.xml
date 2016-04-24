@@ -29,7 +29,7 @@
         android:layout_marginTop="30dp"
         android:ems="10"
         android:hint="Enter Password"
-        android:inputType="text"
+        android:inputType="numberPassword"
         android:layout_above="@+id/button"/>
 
     <Button

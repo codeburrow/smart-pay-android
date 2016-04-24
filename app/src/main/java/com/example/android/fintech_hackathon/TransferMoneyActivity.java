@@ -58,8 +58,11 @@ public class TransferMoneyActivity extends AppCompatActivity {
 
         mIbanLookingFor = iban;
 
-        CheckIbanAccountTask checkIBANAccountTask = new CheckIbanAccountTask();
-        checkIBANAccountTask.execute(LoginActivity.API_KEY, mIbanLookingFor);
+//        CheckIbanAccountTask checkIBANAccountTask = new CheckIbanAccountTask();
+//        checkIBANAccountTask.execute(LoginActivity.API_KEY, mIbanLookingFor);
+
+        CountTransactionsTask countTransactionsTask = new CountTransactionsTask();
+        countTransactionsTask.execute(LoginActivity.API_KEY);
     }
 
     private class CheckIbanAccountTask extends AsyncTask<String, Void, JSONObject> {
@@ -125,6 +128,47 @@ public class TransferMoneyActivity extends AppCompatActivity {
                 }
             }
             return null;
+        }
+    }
+
+    private class CountTransactionsTask extends AsyncTask<String, Void, String>{
+        // LOG_TAG
+        private final String LOG_TAG = CountTransactionsTask.class.getSimpleName();
+        public static final String TRANSACTIONS_API_KEY = "transactions";
+
+        @Override
+        protected String doInBackground(String... args) {
+            // JSON Parser
+            JSONParser jsonParser = new JSONParser();
+            // GET url
+            final String GET_ACCOUNTS_LIST_URL =
+                    "https://nbgdemo.azure-api.net/nodeopenapi/api/transactions/rest";
+
+            // Building Parameters
+            List<NameValuePair> params = new ArrayList<NameValuePair>();
+            params.add(new BasicNameValuePair("key", args[0]));
+
+            // Make Http GET Request
+            JSONObject jsonResponse = jsonParser.makeHttpRequest(
+                    GET_ACCOUNTS_LIST_URL, "GET", params);
+
+            try {
+                JSONArray transactions = jsonResponse.getJSONArray(TRANSACTIONS_API_KEY);
+
+                return transactions.length() + "";
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(String numberOfTransactions) {
+            if (null == numberOfTransactions){
+                Log.e(TAG , "No transactions to count");
+            } else {
+                Log.e(TAG, "Number Of Transactions: " + numberOfTransactions);
+            }
         }
     }
 

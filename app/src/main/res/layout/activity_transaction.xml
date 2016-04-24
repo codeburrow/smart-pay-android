@@ -9,6 +9,26 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context=".TransferMoneyActivity">
 
+    <EditText
+        android:id="@+id/password_edittext"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="61dp"
+        android:ems="10"
+        android:hint="Enter Password"
+        android:inputType="text"
+        android:layout_above="@+id/button"/>
 
+    <Button
+        android:id="@+id/button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:padding="16dp"
+        android:text="Verify"
+        android:background="@drawable/rounded_button_states"
+        android:layout_centerVertical="true"
+        android:layout_centerHorizontal="true"
+        android:onClick="verifyTransaction"/>
 
 </RelativeLayout>

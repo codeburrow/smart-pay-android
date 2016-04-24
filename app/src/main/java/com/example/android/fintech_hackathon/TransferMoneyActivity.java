@@ -1,9 +1,13 @@
 package com.example.android.fintech_hackathon;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
+import android.view.View;
+import android.widget.EditText;
 import android.widget.Toast;
 
 import org.apache.http.NameValuePair;
@@ -28,45 +32,43 @@ public class TransferMoneyActivity extends AppCompatActivity {
 
     String mIbanLookingFor;
 
-    private String iban = "IBAN1124837027";
-    private String amountOfMoney = "20";
+    private String iban;// = "IBAN1124837027";
+    private String amountOfMoney;// = "20";
     private JSONObject mAccountToSendMoney;
+    private EditText passEditText;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_transaction);
 
-//        Intent transferMoneyIntent = getIntent();
-//
-//        qrCodeJson = transferMoneyIntent.getStringExtra(IBAN);
-//
-//        try {
-//            JSONObject qrCodeJsonObject = new JSONObject(qrCodeJson);
-//            iban = qrCodeJsonObject.getString(IBAN_QR_CODE_JSON_KEY);
-//            amountOfMoney = qrCodeJsonObject.getString(AMOUNT_OF_MONEY_QR_CODE_KEY);
-//
-//            Log.e(TAG, "iban: " + iban + ", amount of money: " + amountOfMoney);
-//
-//            Context context = getApplicationContext();
-//            CharSequence text = "iban: " + iban + ", amount of money: " + amountOfMoney;
-//            Toast toast = Toast.makeText(context, text, Toast.LENGTH_SHORT);
-//            toast.show();
-//
-//        } catch (JSONException e) {
-//            e.printStackTrace();
-//        }
+        passEditText = (EditText) findViewById(R.id.password_edittext);
+
+        Intent transferMoneyIntent = getIntent();
+
+        qrCodeJson = transferMoneyIntent.getStringExtra(IBAN);
+
+        try {
+            JSONObject qrCodeJsonObject = new JSONObject(qrCodeJson);
+
+            iban = qrCodeJsonObject.getString(IBAN_QR_CODE_JSON_KEY);
+            amountOfMoney = qrCodeJsonObject.getString(AMOUNT_OF_MONEY_QR_CODE_KEY);
+
+        } catch (JSONException e) {
+            toast("System Error");
+            e.printStackTrace();
+        }
 
         mIbanLookingFor = iban;
 
         CheckIbanAccountTask checkIbanAccountTask = new CheckIbanAccountTask();
         checkIbanAccountTask.execute(LoginActivity.API_KEY_TOKEN, mIbanLookingFor);
 
-        CountTransactionsTask countTransactionsTask = new CountTransactionsTask();
-        countTransactionsTask.execute(LoginActivity.API_KEY_TOKEN);
+//        CountTransactionsTask countTransactionsTask = new CountTransactionsTask();
+//        countTransactionsTask.execute(LoginActivity.API_KEY_TOKEN);
 
-        AttemptToMakeTransactionTask attemptToMakeTransactionTask = new AttemptToMakeTransactionTask();
-        attemptToMakeTransactionTask.execute();
+//        attemptToMakeTransactionTask.execute();
+//        AttemptToMakeTransactionTask attemptToMakeTransactionTask = new AttemptToMakeTransactionTask();
     }
 
     /**
@@ -95,6 +97,16 @@ public class TransferMoneyActivity extends AppCompatActivity {
         return null;
     }
 
+    public void verifyTransaction(View view) {
+        String pass = passEditText.getText().toString();
+        if ("1234".equals(pass)){
+            Intent succesfulTransactionIntent = new Intent(this, SuccessfulTransactionActivity.class);
+            startActivity(succesfulTransactionIntent);
+        } else {
+            toast("Wrong pass\nPlease try again");
+        }
+    }
+
     private class CheckIbanAccountTask extends AsyncTask<String, Void, JSONObject> {
         private static final String ACCOUNTS_API_KEY = "accounts";
         private static final String IBAN_API_KEY = "IBAN";
@@ -118,7 +130,6 @@ public class TransferMoneyActivity extends AppCompatActivity {
 
             try {
                 JSONArray accounts = jsonResponse.getJSONArray(ACCOUNTS_API_KEY);
-
                 return findAccountByIban(accounts);
             } catch (JSONException e) {
                 e.printStackTrace();
@@ -150,8 +161,12 @@ public class TransferMoneyActivity extends AppCompatActivity {
 
                 iban = account.getString(IBAN_API_KEY);
 
+                Log.e(TAG, iban);
+                Log.e(TAG, "-------------" + mIbanLookingFor);
                 if (iban.equalsIgnoreCase(mIbanLookingFor)) {
+                    Log.e(TAG, "sdfgdsg-f-dgd-f-gdfsg-dfsg-sddfddggfggg" + iban);
                     return account;
+
                 }
             }
             return null;
@@ -229,8 +244,10 @@ public class TransferMoneyActivity extends AppCompatActivity {
             } else if (!transactionJsonObject.has("ok")) {
                 toast("System error.");
             } else {
-                toast("Transaction failed.");
+                toast("Transaction verified.");
             }
         }
     }
+
 }
+

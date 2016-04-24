@@ -4,7 +4,6 @@ import android.content.Context;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.widget.Toast;
 
 import org.apache.http.NameValuePair;
@@ -29,6 +28,7 @@ public class TransferMoneyActivity extends AppCompatActivity {
 
     private String iban = "IBAN1124837027";
     private String amountOfMoney = "20";
+    private JSONObject mAccountToSendMoney;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,11 +57,20 @@ public class TransferMoneyActivity extends AppCompatActivity {
 
         mIbanLookingFor = iban;
 
-//        CheckIbanAccountTask checkIBANAccountTask = new CheckIbanAccountTask();
-//        checkIBANAccountTask.execute(LoginActivity.API_KEY, mIbanLookingFor);
+        CheckIbanAccountTask checkIBANAccountTask = new CheckIbanAccountTask();
+        checkIBANAccountTask.execute(LoginActivity.API_KEY, mIbanLookingFor);
 
         CountTransactionsTask countTransactionsTask = new CountTransactionsTask();
         countTransactionsTask.execute(LoginActivity.API_KEY);
+    }
+
+    private void toast(String message) {
+        Context context = getApplicationContext();
+        CharSequence text = message;
+        int duration = Toast.LENGTH_SHORT;
+
+        Toast toast = Toast.makeText(context, text, duration);
+        toast.show();
     }
 
     private class CheckIbanAccountTask extends AsyncTask<String, Void, JSONObject> {
@@ -100,18 +109,16 @@ public class TransferMoneyActivity extends AppCompatActivity {
             if (null == account) {
                 toast("Account not found.");
             } else {
-                toast("Account found.");
+                try {
+                    toast("Account found. id: " + account.getString("id"));
+                } catch (JSONException e) {
+                    toast("Unable to get account id.");
+                }
+
+                mAccountToSendMoney = account;
             }
         }
 
-        private void toast(String message) {
-            Context context = getApplicationContext();
-            CharSequence text = message;
-            int duration = Toast.LENGTH_SHORT;
-
-            Toast toast = Toast.makeText(context, text, duration);
-            toast.show();
-        }
 
         private JSONObject findAccountByIban(JSONArray accounts) throws JSONException {
             String iban;
@@ -122,7 +129,6 @@ public class TransferMoneyActivity extends AppCompatActivity {
                 iban = account.getString(IBAN_API_KEY);
 
                 if (iban.equalsIgnoreCase(mIbanLookingFor)) {
-                    Log.e(TAG, "Found: " + iban);
                     return account;
                 }
             }
@@ -130,10 +136,10 @@ public class TransferMoneyActivity extends AppCompatActivity {
         }
     }
 
-    private class CountTransactionsTask extends AsyncTask<String, Void, String>{
+    private class CountTransactionsTask extends AsyncTask<String, Void, String> {
+        public static final String TRANSACTIONS_API_KEY = "transactions";
         // LOG_TAG
         private final String LOG_TAG = CountTransactionsTask.class.getSimpleName();
-        public static final String TRANSACTIONS_API_KEY = "transactions";
 
         @Override
         protected String doInBackground(String... args) {
@@ -147,9 +153,7 @@ public class TransferMoneyActivity extends AppCompatActivity {
             List<NameValuePair> params = new ArrayList<NameValuePair>();
             params.add(new BasicNameValuePair("key", args[0]));
 
-            // Make Http GET Request
-            JSONObject jsonResponse = jsonParser.makeHttpRequest(
-                    GET_ACCOUNTS_LIST_URL, "GET", params);
+            JSONObject jsonResponse = jsonParser.makeHttpRequest(GET_ACCOUNTS_LIST_URL, "GET", params);
 
             try {
                 JSONArray transactions = jsonResponse.getJSONArray(TRANSACTIONS_API_KEY);
@@ -163,12 +167,11 @@ public class TransferMoneyActivity extends AppCompatActivity {
 
         @Override
         protected void onPostExecute(String numberOfTransactions) {
-            if (null == numberOfTransactions){
-                Log.e(TAG , "No transactions to count");
+            if (null == numberOfTransactions) {
+                toast("No transactions to count");
             } else {
-                Log.e(TAG, "Number Of Transactions: " + numberOfTransactions);
+                toast("Number Of Transactions: " + numberOfTransactions);
             }
         }
     }
-
 }

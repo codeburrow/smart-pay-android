@@ -39,6 +39,12 @@ public class ShowQRcodeActivity extends AppCompatActivity {
         }
     }
 
+    @Override
+    public void onBackPressed() {
+        Intent backIntent = new Intent(this, ScanQRcodeActivity.class);
+        startActivity(backIntent);
+    }
+
     public void startAccountRefresh(View view) {
         Intent refreshAccountIntent = new Intent(this, RefreshAccountActivity.class);
         startActivity(refreshAccountIntent);

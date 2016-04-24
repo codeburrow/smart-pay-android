@@ -19,15 +19,13 @@
         android:textAlignment="center"
         android:textSize="20sp" />
 
-    <Button
-        android:id="@+id/show_QRcode_button"
-        android:layout_width="match_parent"
+    <ImageButton
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="16dp"
-        android:text="Ask Money"
+        android:id="@+id/imageButton"
+        android:src="@drawable/qr_button"
         android:onClick="showQRcode"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:background="@drawable/rounded_button_states"/>
+        android:layout_alignParentTop="true"
+        android:layout_alignParentStart="true" />
 
 </RelativeLayout>

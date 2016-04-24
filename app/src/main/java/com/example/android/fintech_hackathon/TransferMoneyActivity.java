@@ -27,7 +27,6 @@ public class TransferMoneyActivity extends AppCompatActivity {
     // the IBAN_API_KEY we are looking for
     String mIbanLookingFor;
 
-    // Test values - officially get them from the commented out Intent
     private String iban = "IBAN1124837027";
     private String amountOfMoney = "20";
 

@@ -19,9 +19,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class LoginActivity extends AppCompatActivity {
-    private static final String TAG = LoginActivity.class.getSimpleName();
     public static final String API_KEY = "d8dd6ba4f73444f6b2ef5a92d1a98b6f";
-
+    private static final String TAG = LoginActivity.class.getSimpleName();
     // EditText
     EditText loginEditText;
     // Button
@@ -65,8 +64,7 @@ public class LoginActivity extends AppCompatActivity {
             params.add(new BasicNameValuePair("key", args[0]));
 
             // Make Http GET Request
-            JSONObject jsonResponse = jsonParser.makeHttpRequest(
-                    GET_ACCOUNTS_LIST_URL, "GET", params);
+            JSONObject jsonResponse = jsonParser.makeHttpRequest(GET_ACCOUNTS_LIST_URL, "GET", params);
 
             try {
                 JSONArray accounts = jsonResponse.getJSONArray(ACCOUNTS_API_KEY);

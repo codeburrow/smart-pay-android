@@ -3,8 +3,7 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
-      <module fileurl="file://$PROJECT_DIR$/fintech_hackathon_wv.iml" filepath="$PROJECT_DIR$/fintech_hackathon_wv.iml" />
-      <module fileurl="file://$PROJECT_DIR$/nbg-fintech-hackathon-android.iml" filepath="$PROJECT_DIR$/nbg-fintech-hackathon-android.iml" />
+      <module fileurl="file://$PROJECT_DIR$/smart pay.iml" filepath="$PROJECT_DIR$/smart pay.iml" />
     </modules>
   </component>
 </project>

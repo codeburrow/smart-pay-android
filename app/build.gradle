@@ -7,7 +7,7 @@ android {
     useLibrary 'org.apache.http.legacy'
 
     defaultConfig {
-        applicationId "com.codeburrow.android.fintech_hackathon_wv"
+        applicationId "com.codeburrow.android.smart_pay"
         minSdkVersion 18
         targetSdkVersion 23
         versionCode 1

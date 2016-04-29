@@ -6,5 +6,3 @@
 .DS_Store
 /build
 /captures
-!app-debug.apk
-!/app/build/outpus/

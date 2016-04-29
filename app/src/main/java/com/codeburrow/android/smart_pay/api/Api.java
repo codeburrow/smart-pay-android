@@ -27,7 +27,7 @@ public abstract class Api {
     public static final String APPLICATION_JSON = "application/json";
     private static final String TAG = JsonParser.class.getSimpleName();
 
-    public String makePutRequest(String apiUrl, JSONObject jsonParams) {
+    protected String makePutRequest(String apiUrl, JSONObject jsonParams) {
         HttpPut httpPut = new HttpPut(apiUrl);
         httpPut.setHeader(CONTENT_TYPE, APPLICATION_JSON);
         httpPut.setHeader(OCP_APIM_SUBSCRIPTION_KEY, BuildConfig.NBG_API_KEY_TOKEN);

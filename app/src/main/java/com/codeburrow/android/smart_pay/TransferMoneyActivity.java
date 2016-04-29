@@ -241,6 +241,8 @@ public class TransferMoneyActivity extends AppCompatActivity {
                 Log.e(TAG, e.getMessage());
             }
 
+            JSONObject manJson = new JSONObject();
+
             return jsonParser.makePutRequest(setTransactionUrl, jsonParams);
         }
 

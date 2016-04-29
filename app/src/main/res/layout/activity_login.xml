@@ -9,8 +9,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
-        android:hint="Enter your IBAN"
-        android:text="IBAN11222666"
+        android:hint="@string/enter_your_iban"
+        android:text="@string/iban11222666"
         android:layout_gravity="center_horizontal" />
 
     <EditText
@@ -20,8 +20,8 @@
         android:inputType="numberPassword"
         android:layout_marginTop="16dp"
         android:ems="10"
-        android:hint="Enter your password"
-        android:text="1234"
+        android:hint="@string/enter_your_password"
+        android:text="@string/_1234"
         android:layout_gravity="center_horizontal" />
 
     <Button
@@ -29,7 +29,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
-        android:text="LOG IN"
+        android:text="@string/log_in"
         android:background="@drawable/rounded_button_states"
         android:onClick="login"
         />
@@ -38,7 +38,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="32dp"
-        android:text="Some valid IBAN:\n\nIBAN11222666\nIBAN7893560885\nIBAN9786691124\nIBAN4646012056\nIBAN4266186037"
+        android:text="@string/some_valid_iban_n_niban11222666_niban7893560885_niban9786691124_niban4646012056_niban4266186037"
         android:textAlignment="center"
         />
 

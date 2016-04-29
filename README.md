@@ -1,2 +1,2 @@
-# nbg-fintech-hackathon-android
+# Smart Pay
 Execute direct financial transactions. 

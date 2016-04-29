@@ -8,5 +8,11 @@
     <string name="make_payment">BUY IT!</string>
 
     <string name="no_thanks">No, Thanks</string>
+    <string name="log_in">LOG IN</string>
+    <string name="enter_your_password">Enter your password</string>
+    <string name="_1234">1234</string>
+    <string name="enter_your_iban">Enter your IBAN</string>
+    <string name="iban11222666">IBAN11222666</string>
+    <string name="some_valid_iban_n_niban11222666_niban7893560885_niban9786691124_niban4646012056_niban4266186037">Some valid IBAN:\n\nIBAN11222666\nIBAN7893560885\nIBAN9786691124\nIBAN4646012056\nIBAN4266186037</string>
 
 </resources>

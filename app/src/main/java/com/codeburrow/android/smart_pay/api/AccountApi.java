@@ -16,7 +16,7 @@ public class AccountApi extends Api {
     static final String TAG = AccountApi.class.getSimpleName();
     static String API_URL = "https://nbgdemo.azure-api.net/nodeopenapi/api/accounts/rest";
 
-    public String findAccountByIban(String iban) {
+    public String findByIban(String iban) {
         String nbgTrackId = UUID.randomUUID().toString();
         JSONObject parametersJson = new JSONObject();
         JSONObject payloadJson = new JSONObject();

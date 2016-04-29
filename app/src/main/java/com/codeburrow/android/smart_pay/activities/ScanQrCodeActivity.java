@@ -1,4 +1,4 @@
-package com.codeburrow.android.smart_pay;
+package com.codeburrow.android.smart_pay.activities;
 
 import android.Manifest;
 import android.content.Intent;
@@ -13,6 +13,7 @@ import android.view.SurfaceView;
 import android.view.View;
 import android.widget.Toast;
 
+import com.codeburrow.android.smart_pay.R;
 import com.google.android.gms.vision.CameraSource;
 import com.google.android.gms.vision.Detector;
 import com.google.android.gms.vision.barcode.Barcode;

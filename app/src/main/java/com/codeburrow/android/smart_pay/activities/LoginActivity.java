@@ -1,4 +1,4 @@
-package com.codeburrow.android.smart_pay;
+package com.codeburrow.android.smart_pay.activities;
 
 import android.content.Context;
 import android.content.SharedPreferences;
@@ -7,6 +7,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.EditText;
 
+import com.codeburrow.android.smart_pay.R;
 import com.codeburrow.android.smart_pay.async_tasks.AttemptToFindAccountTask;
 
 public class LoginActivity extends AppCompatActivity {

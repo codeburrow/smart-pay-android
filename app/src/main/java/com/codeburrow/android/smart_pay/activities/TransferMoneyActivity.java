@@ -1,4 +1,4 @@
-package com.codeburrow.android.smart_pay;
+package com.codeburrow.android.smart_pay.activities;
 
 import android.content.Context;
 import android.content.Intent;
@@ -10,6 +10,9 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.codeburrow.android.smart_pay.JsonParser;
+import com.codeburrow.android.smart_pay.R;
 
 import org.apache.http.NameValuePair;
 import org.apache.http.message.BasicNameValuePair;

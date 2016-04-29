@@ -1,9 +1,11 @@
-package com.codeburrow.android.smart_pay;
+package com.codeburrow.android.smart_pay.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
+
+import com.codeburrow.android.smart_pay.R;
 
 public class SuccessfulTransactionActivity extends AppCompatActivity {
 

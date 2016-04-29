@@ -1,4 +1,4 @@
-package com.codeburrow.android.smart_pay;
+package com.codeburrow.android.smart_pay.activities;
 
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
@@ -6,6 +6,8 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.widget.ImageView;
+
+import com.codeburrow.android.smart_pay.R;
 
 import java.io.IOException;
 import java.io.InputStream;

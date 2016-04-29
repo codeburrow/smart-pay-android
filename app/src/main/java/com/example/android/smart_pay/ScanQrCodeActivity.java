@@ -11,34 +11,27 @@ import android.util.SparseArray;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 import android.view.View;
+import android.widget.Toast;
 
 import com.google.android.gms.vision.CameraSource;
 import com.google.android.gms.vision.Detector;
 import com.google.android.gms.vision.barcode.Barcode;
 import com.google.android.gms.vision.barcode.BarcodeDetector;
 
-import java.io.IOException;
-
 public class ScanQrCodeActivity extends AppCompatActivity {
 
-    // LOG_TAG
     public static final String LOG_TAG = ScanQrCodeActivity.class.getSimpleName();
-    // SurfaceView in order to display the preview frames captured by the camera.
-    SurfaceView cameraView;
-    // CameraSource
-    CameraSource cameraSource;
-    // Request code for runtime permissions
-    final private int REQUEST_CODE_ASK_PERMISSIONS = 123;
     public static final String IBAN = "iban";
+    final private int REQUEST_CODE_ASK_PERMISSIONS = 123;
+    SurfaceView cameraView;
+    CameraSource cameraSource;
     private String scannedIban;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_scan_qr_code);
 
-        // Get SurfaceView from the xml.
         cameraView = (SurfaceView) findViewById(R.id.camera_view);
 
         /**
@@ -78,8 +71,9 @@ public class ScanQrCodeActivity extends AppCompatActivity {
                         }
                     }
                     cameraSource.start(cameraView.getHolder());
-                } catch (IOException ie) {
-                    Log.e("CAMERA SOURCE", ie.getMessage());
+                } catch (Exception exception) {
+                    Log.e("CAMERA SOURCE", exception.getMessage());
+                    Toast.makeText(ScanQrCodeActivity.this, "Camera is required.", Toast.LENGTH_SHORT).show();
                 }
             }
 
@@ -134,9 +128,9 @@ public class ScanQrCodeActivity extends AppCompatActivity {
 
     }
 
-    public void showQRcode(View view) {
-        Intent showQRcodeIntent = new Intent(this, ShowQrCodeActivity.class);
-        startActivity(showQRcodeIntent);
+    public void showQrCode(View view) {
+        Intent showQrCodeIntent = new Intent(this, ShowQrCodeActivity.class);
+        startActivity(showQrCodeIntent);
     }
 
     public void showDetails(View view) {

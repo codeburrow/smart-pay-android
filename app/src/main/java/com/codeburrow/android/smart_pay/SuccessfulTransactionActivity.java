@@ -1,4 +1,4 @@
-package com.example.android.smart_pay;
+package com.codeburrow.android.smart_pay;
 
 import android.content.Intent;
 import android.os.Bundle;

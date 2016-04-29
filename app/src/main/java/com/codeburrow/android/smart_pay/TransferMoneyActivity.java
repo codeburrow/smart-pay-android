@@ -1,4 +1,4 @@
-package com.example.android.smart_pay;
+package com.codeburrow.android.smart_pay;
 
 import android.content.Context;
 import android.content.Intent;
@@ -240,8 +240,6 @@ public class TransferMoneyActivity extends AppCompatActivity {
                 e.printStackTrace();
                 Log.e(TAG, e.getMessage());
             }
-
-            JSONObject manJson = new JSONObject();
 
             return jsonParser.makePutRequest(setTransactionUrl, jsonParams);
         }

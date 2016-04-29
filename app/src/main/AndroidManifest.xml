@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.android.smart_pay">
+    package="com.codeburrow.android.smart_pay">
 
     <!-- Required to be able to access the Internet. -->
     <uses-permission android:name="android.permission.INTERNET" />
@@ -18,7 +18,7 @@
             android:name="com.google.android.gms.version"
             android:value="@integer/google_play_services_version" />
 
-        <activity android:name=".ScanQrCodeActivity"
+        <activity android:name="com.codeburrow.android.smart_pay.ScanQrCodeActivity"
             android:noHistory="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -26,27 +26,27 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".TransferMoneyActivity"
+        <activity android:name="com.codeburrow.android.smart_pay.TransferMoneyActivity"
             android:noHistory="true"
-            android:parentActivityName=".ScanQrCodeActivity">
+            android:parentActivityName="com.codeburrow.android.smart_pay.ScanQrCodeActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value=".ScanQrCodeActivity" />
+                android:value="com.codeburrow.android.smart_pay.ScanQrCodeActivity" />
         </activity>
         <activity
-            android:name=".ShowQrCodeActivity"
+            android:name="com.codeburrow.android.smart_pay.ShowQrCodeActivity"
             android:noHistory="true"
-            android:parentActivityName=".ScanQrCodeActivity">
+            android:parentActivityName="com.codeburrow.android.smart_pay.ScanQrCodeActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value=".ScanQrCodeActivity" />
+                android:value="com.codeburrow.android.smart_pay.ScanQrCodeActivity" />
         </activity>
-        <activity android:name=".SuccessfulTransactionActivity"
+        <activity android:name="com.codeburrow.android.smart_pay.SuccessfulTransactionActivity"
             android:noHistory="true"
-            android:parentActivityName=".ScanQrCodeActivity">
+            android:parentActivityName="com.codeburrow.android.smart_pay.ScanQrCodeActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value=".ScanQrCodeActivity" />
+                android:value="com.codeburrow.android.smart_pay.ScanQrCodeActivity" />
         </activity>
     </application>
 

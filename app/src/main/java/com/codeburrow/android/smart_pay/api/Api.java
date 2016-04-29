@@ -10,9 +10,12 @@ import org.apache.http.client.methods.HttpPost;
 import org.apache.http.client.methods.HttpPut;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.DefaultHttpClient;
-import org.apache.http.util.EntityUtils;
+import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.BufferedReader;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.io.UnsupportedEncodingException;
 
 /**
@@ -27,8 +30,9 @@ public abstract class Api {
     public static final String OCP_APIM_SUBSCRIPTION_KEY = "Ocp-Apim-Subscription-Key";
     public static final String APPLICATION_JSON = "application/json";
     private static final String TAG = JsonParser.class.getSimpleName();
+    public static final String ACCOUNTS_KEY = "accounts";
 
-    protected String makePutRequest(String apiUrl, JSONObject jsonParams) {
+    protected JSONObject makePutRequest(String apiUrl, JSONObject jsonParams) {
         HttpPut httpPut = new HttpPut(apiUrl);
         httpPut.setHeader(CONTENT_TYPE, APPLICATION_JSON);
         httpPut.setHeader(OCP_APIM_SUBSCRIPTION_KEY, BuildConfig.NBG_API_KEY_TOKEN);
@@ -46,7 +50,8 @@ public abstract class Api {
         HttpResponse httpResponse = null;
         try {
             httpResponse = httpClient.execute(httpPut);
-            return EntityUtils.toString(httpResponse.getEntity());
+
+            return convertHttpResponse(httpResponse.getEntity().getContent());
         } catch (Exception e) {
             e.printStackTrace();
             Log.e(TAG, e.getMessage());
@@ -54,7 +59,7 @@ public abstract class Api {
         return null;
     }
 
-    public String makePostRequest(String url, JSONObject jsonParams) {
+    public JSONObject makePostRequest(String url, JSONObject jsonParams) {
         HttpPost httpPost = new HttpPost(url);
         httpPost.setHeader(CONTENT_TYPE, APPLICATION_JSON);
         httpPost.setHeader(OCP_APIM_SUBSCRIPTION_KEY, BuildConfig.NBG_API_KEY_TOKEN);
@@ -72,11 +77,40 @@ public abstract class Api {
         HttpResponse httpResponse = null;
         try {
             httpResponse = httpClient.execute(httpPost);
-            return EntityUtils.toString(httpResponse.getEntity());
+
+            return convertHttpResponse(httpResponse.getEntity().getContent());
         } catch (Exception e) {
             e.printStackTrace();
             Log.e(TAG, e.getMessage());
         }
         return null;
+    }
+
+    private JSONObject convertHttpResponse(InputStream httpEntityContent) {
+        String json = null;
+
+        try {
+            BufferedReader reader = new BufferedReader(new InputStreamReader(
+                    httpEntityContent, "UTF-8"), 8);
+            StringBuilder sb = new StringBuilder();
+            String line = null;
+            while ((line = reader.readLine()) != null) {
+                sb.append(line + "\n");
+            }
+            httpEntityContent.close();
+            json = sb.toString();
+        } catch (Exception e) {
+            Log.e("Buffer Error", "Error converting result " + e.toString());
+        }
+
+        JSONObject jsonObject = null;
+
+        try {
+            jsonObject = new JSONObject(json);
+        } catch (JSONException e) {
+            Log.e("JSON Parser", "Error parsing data " + e.toString());
+        }
+
+        return jsonObject;
     }
 }

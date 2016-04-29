@@ -30,6 +30,6 @@ public class AccountApi extends Api {
             Log.e(TAG, e.getMessage());
         }
 
-        return makePutRequest(API_URL, parametersJson);
+        return makePostRequest(API_URL, parametersJson);
     }
 }

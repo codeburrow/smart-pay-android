@@ -6,6 +6,7 @@ import com.codeburrow.android.smart_pay.BuildConfig;
 import com.codeburrow.android.smart_pay.JsonParser;
 
 import org.apache.http.HttpResponse;
+import org.apache.http.client.methods.HttpPost;
 import org.apache.http.client.methods.HttpPut;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.DefaultHttpClient;
@@ -45,6 +46,32 @@ public abstract class Api {
         HttpResponse httpResponse = null;
         try {
             httpResponse = httpClient.execute(httpPut);
+            return EntityUtils.toString(httpResponse.getEntity());
+        } catch (Exception e) {
+            e.printStackTrace();
+            Log.e(TAG, e.getMessage());
+        }
+        return null;
+    }
+
+    public String makePostRequest(String url, JSONObject jsonParams) {
+        HttpPost httpPost = new HttpPost(url);
+        httpPost.setHeader(CONTENT_TYPE, APPLICATION_JSON);
+        httpPost.setHeader(OCP_APIM_SUBSCRIPTION_KEY, BuildConfig.NBG_API_KEY_TOKEN);
+
+        StringEntity stringEntity = null;
+        try {
+            stringEntity = new StringEntity(jsonParams.toString());
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+            Log.e(TAG, e.getMessage());
+        }
+        httpPost.setEntity(stringEntity);
+
+        DefaultHttpClient httpClient = new DefaultHttpClient();
+        HttpResponse httpResponse = null;
+        try {
+            httpResponse = httpClient.execute(httpPost);
             return EntityUtils.toString(httpResponse.getEntity());
         } catch (Exception e) {
             e.printStackTrace();

@@ -11,18 +11,15 @@ import java.io.IOException;
 import java.io.InputStream;
 
 public class ShowQrCodeActivity extends AppCompatActivity {
-    // LOG_TAG
     private static final String TAG = ShowQrCodeActivity.class.getSimpleName();
     public static final String QR_CODE_JPG = "qrcode.jpg";
-    // ImageView for the QR code
-    private ImageView qrCodeImg;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_show_qr_code);
 
-        qrCodeImg = (ImageView) findViewById(R.id.imageView);
+        ImageView qrCodeImg = (ImageView) findViewById(R.id.imageView);
 
         try {
             // get input stream
@@ -41,5 +38,4 @@ public class ShowQrCodeActivity extends AppCompatActivity {
     public void onBackPressed() {
         startActivity(new Intent(this, ScanQrCodeActivity.class));
     }
-
 }

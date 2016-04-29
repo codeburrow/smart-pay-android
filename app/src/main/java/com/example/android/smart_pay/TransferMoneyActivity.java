@@ -23,20 +23,14 @@ import java.util.UUID;
 
 public class TransferMoneyActivity extends AppCompatActivity {
 
-    private static final String LOG_TAG = TransferMoneyActivity.class.getSimpleName();
-    private EditText passEditText;
-    private TextView infoTextView;
-
     public static final String IBAN_QR_CODE_JSON_KEY = "iban";
     public static final String AMOUNT_OF_MONEY_QR_CODE_KEY = "amount-of-money";
+    private static final String LOG_TAG = TransferMoneyActivity.class.getSimpleName();
     private static final String TRANSACTIONS_API_KEY = "transactions";
     private static final String UUID_API_KEY = "uuid";
-
-    private String qrCodeJson;
+    private EditText passEditText;
     private String iban;// = "IBAN1124837027";
-    private String amountOfMoney;// = "20";
 
-    private JSONObject mAccountToSendMoney;
     private String uuid = "codeburrow.com";
 
     @Override
@@ -46,16 +40,16 @@ public class TransferMoneyActivity extends AppCompatActivity {
 
         passEditText = (EditText) findViewById(R.id.password_edittext);
 
-        infoTextView = (TextView) findViewById(R.id.info_text_view);
+        TextView infoTextView = (TextView) findViewById(R.id.info_text_view);
 
         Intent transferMoneyIntent = getIntent();
-        qrCodeJson = transferMoneyIntent.getStringExtra(ScanQrCodeActivity.IBAN);
+        String qrCodeJson = transferMoneyIntent.getStringExtra(ScanQrCodeActivity.IBAN);
 
         try {
             JSONObject qrCodeJsonObject = new JSONObject(qrCodeJson);
 
             iban = qrCodeJsonObject.getString(IBAN_QR_CODE_JSON_KEY);
-            amountOfMoney = qrCodeJsonObject.getString(AMOUNT_OF_MONEY_QR_CODE_KEY);
+            String amountOfMoney = qrCodeJsonObject.getString(AMOUNT_OF_MONEY_QR_CODE_KEY);
 
             infoTextView.setText("Send to\nIBAN: " + iban + "\nThe amount of: " + amountOfMoney + "$\nuuid: " + uuid);
 
@@ -151,7 +145,7 @@ public class TransferMoneyActivity extends AppCompatActivity {
                     toast("Unable to get account id.");
                 }
 
-                mAccountToSendMoney = account;
+                JSONObject mAccountToSendMoney = account;
             }
         }
 
@@ -248,11 +242,6 @@ public class TransferMoneyActivity extends AppCompatActivity {
             }
 
             JSONObject manJson = new JSONObject();
-
-//            params.add(new BasicNameValuePair("payload[insert][uuid]", uuid));
-//            params.add(new BasicNameValuePair("payload[insert][details][posted_by_user_id]", "571a162f95806d5414110f20"));
-//            params.add(new BasicNameValuePair("payload[insert][details][approved_by_user_id]", "571b6c423ddcdb580cbee7db"));
-//            params.add(new BasicNameValuePair("payload[insert][details][value][amount]", "200"));
 
             return jsonParser.makePutRequest(setTransactionUrl, jsonParams);
         }

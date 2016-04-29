@@ -18,15 +18,21 @@
             android:name="com.google.android.gms.version"
             android:value="@integer/google_play_services_version" />
 
-        <activity android:name="com.codeburrow.android.smart_pay.ScanQrCodeActivity"
-            android:noHistory="true">
+        <activity android:name="com.example.android.smart_pay.Login">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name="com.codeburrow.android.smart_pay.TransferMoneyActivity"
+
+        <activity
+            android:name=".ScanQrCodeActivity"
+            android:noHistory="true">
+
+        </activity>
+        <activity
+            android:name=".TransferMoneyActivity"
             android:noHistory="true"
             android:parentActivityName="com.codeburrow.android.smart_pay.ScanQrCodeActivity">
             <meta-data
@@ -41,7 +47,8 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.codeburrow.android.smart_pay.ScanQrCodeActivity" />
         </activity>
-        <activity android:name="com.codeburrow.android.smart_pay.SuccessfulTransactionActivity"
+        <activity
+            android:name="com.codeburrow.android.smart_pay.SuccessfulTransactionActivity"
             android:noHistory="true"
             android:parentActivityName="com.codeburrow.android.smart_pay.ScanQrCodeActivity">
             <meta-data

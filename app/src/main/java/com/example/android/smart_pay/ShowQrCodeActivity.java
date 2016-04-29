@@ -1,4 +1,4 @@
-package com.example.android.fintech_hackathon;
+package com.example.android.smart_pay;
 
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
@@ -10,10 +10,9 @@ import android.widget.ImageView;
 import java.io.IOException;
 import java.io.InputStream;
 
-public class ShowQRcodeActivity extends AppCompatActivity {
-
+public class ShowQrCodeActivity extends AppCompatActivity {
     // LOG_TAG
-    private static final String TAG = ShowQRcodeActivity.class.getSimpleName();
+    private static final String TAG = ShowQrCodeActivity.class.getSimpleName();
     public static final String QR_CODE_JPG = "qrcode.jpg";
     // ImageView for the QR code
     private ImageView qrCodeImg;
@@ -21,7 +20,7 @@ public class ShowQRcodeActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_show_qrcode);
+        setContentView(R.layout.activity_show_qr_code);
 
         qrCodeImg = (ImageView) findViewById(R.id.imageView);
 
@@ -40,8 +39,7 @@ public class ShowQRcodeActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        Intent backIntent = new Intent(this, ScanQRcodeActivity.class);
-        startActivity(backIntent);
+        startActivity(new Intent(this, ScanQrCodeActivity.class));
     }
 
 }

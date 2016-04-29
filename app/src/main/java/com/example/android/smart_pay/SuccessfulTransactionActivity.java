@@ -1,4 +1,4 @@
-package com.example.android.fintech_hackathon;
+package com.example.android.smart_pay;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -14,13 +14,11 @@ public class SuccessfulTransactionActivity extends AppCompatActivity {
     }
 
     public void scanAgain(View view) {
-        Intent scanQRcodeIntent = new Intent(this, ScanQRcodeActivity.class);
-        startActivity(scanQRcodeIntent);
+        startActivity(new Intent(this, ScanQrCodeActivity.class));
     }
 
     @Override
     public void onBackPressed() {
-        Intent scanQRcodeIntent = new Intent(this, ScanQRcodeActivity.class);
-        startActivity(scanQRcodeIntent);
+        startActivity(new Intent(this, ScanQrCodeActivity.class));
     }
 }

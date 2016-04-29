@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.android.fintech_hackathon" >
+    package="com.example.android.smart_pay">
 
     <!-- Required to be able to access the Internet. -->
     <uses-permission android:name="android.permission.INTERNET" />
@@ -13,36 +13,41 @@
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme" >
-        <activity android:name=".LoginActivity" />
-        <activity android:name=".ChooseTransactionActivity" />
-        <activity android:name=".ShowQRcodeActivity" />
-        <activity
-            android:name=".ScanQRcodeActivity"
-            android:configChanges="orientation"
-            android:noHistory="true"
-            android:screenOrientation="portrait" >
+        android:theme="@style/AppTheme">
+        <meta-data
+            android:name="com.google.android.gms.version"
+            android:value="@integer/google_play_services_version" />
+
+        <activity android:name=".ScanQrCodeActivity"
+            android:noHistory="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity
-            android:name=".TransferMoneyActivity"
-            android:configChanges="orientation"
+        <activity android:name=".TransferMoneyActivity"
             android:noHistory="true"
-            android:screenOrientation="portrait" />
-        <activity android:name=".RefreshAccountActivity" />
+            android:parentActivityName=".ScanQrCodeActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".ScanQrCodeActivity" />
+        </activity>
         <activity
-            android:name=".SuccessfulTransactionActivity"
-            android:configChanges="orientation"
+            android:name=".ShowQrCodeActivity"
             android:noHistory="true"
-            android:screenOrientation="portrait" />
-
-        <meta-data
-            android:name="com.google.android.gms.version"
-            android:value="@integer/google_play_services_version" />
+            android:parentActivityName=".ScanQrCodeActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".ScanQrCodeActivity" />
+        </activity>
+        <activity android:name=".SuccessfulTransactionActivity"
+            android:noHistory="true"
+            android:parentActivityName=".ScanQrCodeActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".ScanQrCodeActivity" />
+        </activity>
     </application>
 
 </manifest>

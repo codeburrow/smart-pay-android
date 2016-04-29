@@ -1,4 +1,4 @@
-package com.example.android.fintech_hackathon;
+package com.example.android.smart_pay;
 
 import android.app.Application;
 import android.test.ApplicationTestCase;

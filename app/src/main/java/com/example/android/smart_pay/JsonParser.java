@@ -1,4 +1,4 @@
-package com.example.android.fintech_hackathon;
+package com.example.android.smart_pay;
 
 import android.util.Log;
 
@@ -24,15 +24,6 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.UnsupportedEncodingException;
 import java.util.List;
-
-
-/*
-    build.gradle(Module:app)
-
-    android{
-        useLibrary 'org.apache.http.legacy'
-    }
- */
 
 public class JsonParser {
     private static final String TAG = JsonParser.class.getSimpleName();
@@ -98,7 +89,7 @@ public class JsonParser {
             if (method.equalsIgnoreCase("POST")) {
                 HttpPost httpPost = new HttpPost(url);
                 httpPost.setEntity(new UrlEncodedFormEntity(params, "UTF-8"));
-                httpPost.setHeader(new BasicHeader("Ocp-Apim-Subscription-Key", LoginActivity.API_KEY_TOKEN));
+                httpPost.setHeader(new BasicHeader("Ocp-Apim-Subscription-Key", BuildConfig.NBG_API_KEY_TOKEN));
 
                 Log.e(TAG, "data: " + params);
 
@@ -148,7 +139,7 @@ public class JsonParser {
     public String makePutRequest(String setTransactionUrl, JSONObject jsonParams) {
         HttpPut httpPut = new HttpPut(setTransactionUrl);
         httpPut.setHeader("Content-Type", "application/json");
-        httpPut.setHeader("Ocp-Apim-Subscription-Key", LoginActivity.API_KEY_TOKEN);
+        httpPut.setHeader("Ocp-Apim-Subscription-Key", BuildConfig.NBG_API_KEY_TOKEN);
 
         StringEntity stringEntity = null;
         try {

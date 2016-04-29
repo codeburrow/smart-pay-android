@@ -1,6 +1,6 @@
-package com.example.android.fintech_hackathon;
+package com.example.android.smart_pay;
 
-
+import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -9,6 +9,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import org.apache.http.NameValuePair;
 import org.apache.http.message.BasicNameValuePair;
@@ -22,35 +23,33 @@ import java.util.UUID;
 
 public class TransferMoneyActivity extends AppCompatActivity {
 
-    public static final String IBAN_QR_CODE_JSON_KEY = "iban";
-    public static final String AMOUNT_OF_MONEY_QR_CODE_KEY = "amount-of-money";
-    private static final String TAG = TransferMoneyActivity.class.getSimpleName();
-    private static final String IBAN = "iban";
-    private static final String TRANSACTIONS_API_KEY = "transactions";
-    private static final String UUID_API_KEY = "uuid";
-    String qrCodeJson;
-    String uuid = "codeburrow.com";
-
-    String mIbanLookingFor;
-
-    private String iban;// = "IBAN1124837027";
-    private String amountOfMoney;// = "20";
-    private JSONObject mAccountToSendMoney;
+    private static final String LOG_TAG = TransferMoneyActivity.class.getSimpleName();
     private EditText passEditText;
     private TextView infoTextView;
+
+    public static final String IBAN_QR_CODE_JSON_KEY = "iban";
+    public static final String AMOUNT_OF_MONEY_QR_CODE_KEY = "amount-of-money";
+    private static final String TRANSACTIONS_API_KEY = "transactions";
+    private static final String UUID_API_KEY = "uuid";
+
+    private String qrCodeJson;
+    private String iban;// = "IBAN1124837027";
+    private String amountOfMoney;// = "20";
+
+    private JSONObject mAccountToSendMoney;
+    private String uuid = "codeburrow.com";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_transaction);
+        setContentView(R.layout.activity_transfer_money);
 
         passEditText = (EditText) findViewById(R.id.password_edittext);
 
         infoTextView = (TextView) findViewById(R.id.info_text_view);
 
         Intent transferMoneyIntent = getIntent();
-
-        qrCodeJson = transferMoneyIntent.getStringExtra(IBAN);
+        qrCodeJson = transferMoneyIntent.getStringExtra(ScanQrCodeActivity.IBAN);
 
         try {
             JSONObject qrCodeJsonObject = new JSONObject(qrCodeJson);
@@ -59,30 +58,28 @@ public class TransferMoneyActivity extends AppCompatActivity {
             amountOfMoney = qrCodeJsonObject.getString(AMOUNT_OF_MONEY_QR_CODE_KEY);
 
             infoTextView.setText("Send to\nIBAN: " + iban + "\nThe amount of: " + amountOfMoney + "$\nuuid: " + uuid);
+
+            Log.e(LOG_TAG, "Send to\nIBAN: " + iban + "\nThe amount of: " + amountOfMoney + "$\nuuid: " + uuid);
         } catch (JSONException e) {
-            toast("System Error");
-            e.printStackTrace();
+            Log.e(LOG_TAG, e.getMessage());
         }
+    }
 
-        mIbanLookingFor = iban;
-
-//        CheckIbanAccountTask checkIbanAccountTask = new CheckIbanAccountTask();
-//        checkIbanAccountTask.execute(LoginActivity.API_KEY_TOKEN, mIbanLookingFor);
-
-//        CountTransactionsTask countTransactionsTask = new CountTransactionsTask();
-//        countTransactionsTask.execute(LoginActivity.API_KEY_TOKEN);
+    @Override
+    public void onBackPressed() {
+        startActivity(new Intent(this, ScanQrCodeActivity.class));
     }
 
     /**
      * @param message
      */
     private void toast(String message) {
-//        Context context = getApplicationContext();
-//        CharSequence text = message;
-//        int duration = Toast.LENGTH_SHORT;
-//
-//        Toast toast = Toast.makeText(context, text, duration);
-//        toast.show();
+        Context context = getApplicationContext();
+        CharSequence text = message;
+        int duration = Toast.LENGTH_SHORT;
+
+        Toast toast = Toast.makeText(context, text, duration);
+        toast.show();
     }
 
     private JSONObject findTransactionByUuid(JSONArray transactions, String uuid) throws JSONException {
@@ -92,7 +89,7 @@ public class TransferMoneyActivity extends AppCompatActivity {
 
             uuid = transaction.getString(UUID_API_KEY);
 
-            if (uuid.equalsIgnoreCase(mIbanLookingFor)) {
+            if (uuid.equalsIgnoreCase(iban)) {
                 return transaction;
             }
         }
@@ -103,7 +100,7 @@ public class TransferMoneyActivity extends AppCompatActivity {
         String pass = passEditText.getText().toString();
         if ("1234".equals(pass)) {
 //        CountTransactionsTask countTransactionsTask = new CountTransactionsTask();
-//        countTransactionsTask.execute(LoginActivity.API_KEY_TOKEN);
+//        countTransactionsTask.execute(BuildConfig.NBG_API_KEY_TOKEN);
 
             AttemptToMakeTransactionTask attemptToMakeTransactionTask = new AttemptToMakeTransactionTask();
             attemptToMakeTransactionTask.execute();
@@ -167,10 +164,10 @@ public class TransferMoneyActivity extends AppCompatActivity {
 
                 iban = account.getString(IBAN_API_KEY);
 
-                Log.e(TAG, iban);
-                Log.e(TAG, "-------------" + mIbanLookingFor);
-                if (iban.equalsIgnoreCase(mIbanLookingFor)) {
-                    Log.e(TAG, "sdfgdsg-f-dgd-f-gdfsg-dfsg-sddfddggfggg" + iban);
+                Log.e(LOG_TAG, iban);
+                Log.e(LOG_TAG, "-------------" + TransferMoneyActivity.this.iban);
+                if (iban.equalsIgnoreCase(TransferMoneyActivity.this.iban)) {
+                    Log.e(LOG_TAG, "sdfgdsg-f-dgd-f-gdfsg-dfsg-sddfddggfggg" + iban);
                     return account;
 
                 }
@@ -275,4 +272,3 @@ public class TransferMoneyActivity extends AppCompatActivity {
     }
 
 }
-

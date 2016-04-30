@@ -14,14 +14,14 @@ import android.widget.Toast;
 import com.codeburrow.android.smart_pay.JsonParser;
 import com.codeburrow.android.smart_pay.R;
 import com.codeburrow.android.smart_pay.async_tasks.AttemptToFindAccountTask;
-import com.codeburrow.android.smart_pay.async_tasks.AttemptToFindAccountTask.AsyncResponse;
+import com.codeburrow.android.smart_pay.async_tasks.AttemptToFindAccountTask.AccountAsyncResponse;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.UUID;
 
-public class TransferMoneyActivity extends AppCompatActivity implements AsyncResponse {
+public class TransferMoneyActivity extends AppCompatActivity implements AccountAsyncResponse {
     private static final String LOG_TAG = TransferMoneyActivity.class.getSimpleName();
 
     // QR code reading constants

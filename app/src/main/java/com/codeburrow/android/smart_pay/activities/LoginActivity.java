@@ -10,9 +10,9 @@ import android.widget.EditText;
 
 import com.codeburrow.android.smart_pay.R;
 import com.codeburrow.android.smart_pay.async_tasks.AttemptToFindAccountTask;
-import com.codeburrow.android.smart_pay.async_tasks.AttemptToFindAccountTask.AsyncResponse;
+import com.codeburrow.android.smart_pay.async_tasks.AttemptToFindAccountTask.AccountAsyncResponse;
 
-public class LoginActivity extends AppCompatActivity implements AsyncResponse {
+public class LoginActivity extends AppCompatActivity implements AccountAsyncResponse {
     private static final String LOG_TAG = LoginActivity.class.getSimpleName();
 
     // Shared Preferences

@@ -20,7 +20,7 @@ public class AttemptToFindAccountTask extends AsyncTask<Void, Void, JSONObject> 
 
     // We may separate this or combined to caller class.
     public interface AsyncResponse {
-        void processFinish();
+        void processFindAccountAsyncFinish();
     }
 
     public AttemptToFindAccountTask(Context context, AsyncResponse delegate, String iban) {
@@ -53,16 +53,16 @@ public class AttemptToFindAccountTask extends AsyncTask<Void, Void, JSONObject> 
             JSONArray accounts = apiResponse.getJSONArray(Api.ACCOUNTS_KEY);
 
             if (accounts.length() == 0) {
-                Toast.makeText(mContext, "IBAN Validation Failed.", Toast.LENGTH_LONG).show();
+                Toast.makeText(mContext, "QR_INFO Validation Failed.", Toast.LENGTH_LONG).show();
                 return;
             }
 
             JSONObject account = (JSONObject) accounts.get(0);
 
-            Toast.makeText(mContext, "IBAN validation successful.", Toast.LENGTH_SHORT).show();
+            Toast.makeText(mContext, "QR_INFO validation successful.", Toast.LENGTH_SHORT).show();
             Toast.makeText(mContext, account.toString(), Toast.LENGTH_LONG).show();
 
-            delegate.processFinish();
+            delegate.processFindAccountAsyncFinish();
         } catch (JSONException e) {
             e.printStackTrace();
             Log.e(TAG, e.getMessage());

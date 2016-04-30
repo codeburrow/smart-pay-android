@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ScanQrCodeActivity">
+    tools:context=".activities.ScanQrCodeActivity">
 
     <SurfaceView
         android:id="@+id/camera_view"
@@ -25,7 +25,7 @@
         android:layout_margin = "16dp"
         android:id="@+id/qr_button"
         android:src="@drawable/qr_button"
-        android:onClick="showQrCode"
+        android:onClick="startReceiveMoneyActivity"
         android:layout_alignParentTop="true"
         android:layout_alignParentStart="true" />
 

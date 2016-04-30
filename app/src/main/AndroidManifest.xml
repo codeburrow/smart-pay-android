@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.codeburrow.android.smart_pay">
+          package="com.codeburrow.android.smart_pay">
 
     <!-- Required to be able to access the Internet. -->
-    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.INTERNET"/>
     <!-- Required to be able to access the camera device. -->
-    <uses-permission android:name="android.permission.CAMERA" />
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.CAMERA"/>
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
 
     <application
         android:allowBackup="true"
@@ -16,13 +16,13 @@
         android:theme="@style/AppTheme">
         <meta-data
             android:name="com.google.android.gms.version"
-            android:value="@integer/google_play_services_version" />
+            android:value="@integer/google_play_services_version"/>
 
         <activity android:name=".activities.LoginActivity">
             <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
+                <action android:name="android.intent.action.MAIN"/>
 
-                <category android:name="android.intent.category.LAUNCHER" />
+                <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
 
@@ -36,15 +36,15 @@
             android:parentActivityName="com.codeburrow.android.smart_pay.activities.ScanQrCodeActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.codeburrow.android.smart_pay.activities.ScanQrCodeActivity" />
+                android:value="com.codeburrow.android.smart_pay.activities.ScanQrCodeActivity"/>
         </activity>
         <activity
-            android:name=".activities.GetMoneyActivity"
+            android:name=".activities.ReceiveMoneyActivity"
             android:noHistory="true"
             android:parentActivityName="com.codeburrow.android.smart_pay.activities.ScanQrCodeActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value=".activities.ScanQrCodeActivity" />
+                android:value=".activities.ScanQrCodeActivity"/>
         </activity>
         <activity
             android:name="com.codeburrow.android.smart_pay.activities.SuccessfulTransactionActivity"
@@ -52,7 +52,15 @@
             android:parentActivityName="com.codeburrow.android.smart_pay.activities.ScanQrCodeActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.codeburrow.android.smart_pay.activities.ScanQrCodeActivity" />
+                android:value="com.codeburrow.android.smart_pay.activities.ScanQrCodeActivity"/>
+        </activity>
+        <activity
+            android:name=".activities.GenerateQrCodeActivity"
+            android:noHistory="true"
+            android:parentActivityName=".activities.ReceiveMoneyActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".activities.ReceiveMoneyActivity"/>
         </activity>
     </application>
 

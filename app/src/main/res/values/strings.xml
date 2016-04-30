@@ -14,5 +14,13 @@
     <string name="enter_your_iban">Enter your IBAN</string>
     <string name="iban11222666">IBAN11222666</string>
     <string name="some_valid_iban_n_niban11222666_niban7893560885_niban9786691124_niban4646012056_niban4266186037">Some valid IBAN:\n\nIBAN11222666\nIBAN7893560885\nIBAN9786691124\nIBAN4646012056\nIBAN4266186037</string>
+    <string name="loading_information">Loading information..</string>
+    <string name="enter_password">Enter Password</string>
+    <string name="verify">Verify</string>
+    <string name="transaction_succeeded">Transaction Succeeded</string>
+    <string name="qr_code_transaction_data">QR Code Transaction Data</string>
+    <string name="amount_of_money_to_receive">Amount Of Money To Receive</string>
+    <string name="_100_00">100.00</string>
+    <string name="generate_qr_code">Generate QR Code</string>
 
 </resources>

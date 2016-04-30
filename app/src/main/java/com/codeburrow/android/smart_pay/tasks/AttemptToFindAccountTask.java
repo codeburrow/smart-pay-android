@@ -62,7 +62,6 @@ public class AttemptToFindAccountTask extends AsyncTask<Void, Void, JSONObject> 
             JSONObject account = (JSONObject) accounts.get(0);
 
             Toast.makeText(mContext, "Authentication successful.", Toast.LENGTH_SHORT).show();
-            Toast.makeText(mContext, account.toString(), Toast.LENGTH_LONG).show();
 
             Log.e(LOG_TAG, account.toString());
             delegate.processFindAccountAsyncFinish();

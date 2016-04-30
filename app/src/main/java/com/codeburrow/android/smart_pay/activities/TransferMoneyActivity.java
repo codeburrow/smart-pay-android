@@ -23,15 +23,15 @@ import java.util.UUID;
 
 public class TransferMoneyActivity extends AppCompatActivity implements AccountAsyncResponse {
     // QR code reading constants
-    public static final String IBAN_QR_CODE_JSON_KEY = "iban";
+    public static final String IBAN_QR_CODE_JSON_KEY = "mIban";
     public static final String AMOUNT_OF_MONEY_QR_CODE_KEY = "amount-of-money";
     private static final String LOG_TAG = TransferMoneyActivity.class.getSimpleName();
     private EditText passEditText;
     private TextView infoTextView;
 
     // QR code information
-    private String iban;
-    private String amountOfMoney;
+    private String mIban;
+    private String mAmountOfMoney;
     private boolean validateReceiver = false;
 
     private String uuid = "codeburrow.com";
@@ -44,35 +44,23 @@ public class TransferMoneyActivity extends AppCompatActivity implements AccountA
         passEditText = (EditText) findViewById(R.id.password_edittext);
         infoTextView = (TextView) findViewById(R.id.info_text_view);
 
-        String qrCodeJsonStr = getIntent().getStringExtra(ScanQrCodeActivity.QR_INFO);
-        readQrCode(qrCodeJsonStr);
+        renderTransactionData();
 
-        AttemptToFindAccountTask attemptToFindAccountTask = new AttemptToFindAccountTask(getApplicationContext(), this, iban);
+        AttemptToFindAccountTask attemptToFindAccountTask = new AttemptToFindAccountTask(getApplicationContext(), this, mIban);
         attemptToFindAccountTask.execute();
     }
 
-    /**
-     * @param qrCodeJsonStr the json formatted String from the QR code (intent)
-     */
-    private void readQrCode(String qrCodeJsonStr) {
-        try {
-            JSONObject qrCodeJsonObject = new JSONObject(qrCodeJsonStr);
+    private void renderTransactionData() {
+        mAmountOfMoney = getIntent().getStringExtra(ScanQrCodeActivity.AMOUNT_OF_MONEY_EXTRA);
+        mIban = getIntent().getStringExtra(ScanQrCodeActivity.IBAN_EXTRA);
 
-            iban = qrCodeJsonObject.getString(IBAN_QR_CODE_JSON_KEY);
-            amountOfMoney = qrCodeJsonObject.getString(AMOUNT_OF_MONEY_QR_CODE_KEY);
-
-            Log.e(LOG_TAG, "Send to\nQR_INFO: " + iban + "\nThe amount of: " + amountOfMoney + "$\nuuid: " + uuid);
-            updateInfoText();
-        } catch (JSONException e) {
-            Log.e(LOG_TAG, e.getMessage());
-
-            infoTextView.setText("What are you looking for?");
-        }
+        Log.e(LOG_TAG, "Send to\nQR_INFO: " + mIban + "\nThe amount of: " + mAmountOfMoney + "$\nuuid: " + uuid);
+        updateInfoText();
     }
 
     public void updateInfoText() {
         if (validateReceiver) {
-            infoTextView.setText("Send to\nIBAN: " + iban + "\nThe amount of: " + amountOfMoney + "$\nuuid: " + uuid);
+            infoTextView.setText("Send to\nIBAN: " + mIban + "\nThe amount of: " + mAmountOfMoney + "$\nuuid: " + uuid);
         } else {
             infoTextView.setText("Scanned an INVALID IBAN");
         }

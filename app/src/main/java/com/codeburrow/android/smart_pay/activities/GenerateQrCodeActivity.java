@@ -1,5 +1,6 @@
 package com.codeburrow.android.smart_pay.activities;
 
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
@@ -14,12 +15,10 @@ import com.google.zxing.WriterException;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-public class GetMoneyActivity extends AppCompatActivity {
-    public static final String AMOUNT_OF_MONEY = "amount-of-money";
-    public static final String IBAN = "iban";
-    private static final String TAG = GetMoneyActivity.class.getSimpleName();
-    private String mAmountOfMoney;
-    private String mIban;
+public class GenerateQrCodeActivity extends AppCompatActivity {
+    public static final String AMOUNT_OF_MONEY_QR_CODE_KEY = "amount-of-money";
+    public static final String IBAN_QR_CODE_KEY = "iban";
+    private static final String TAG = GenerateQrCodeActivity.class.getSimpleName();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,7 +31,7 @@ public class GetMoneyActivity extends AppCompatActivity {
             renderQrCode(imageView);
         } catch (JSONException e) {
             e.printStackTrace();
-            Toast.makeText(GetMoneyActivity.this, "System Error.", Toast.LENGTH_SHORT).show();
+            Toast.makeText(GenerateQrCodeActivity.this, "System Error.", Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -59,9 +58,14 @@ public class GetMoneyActivity extends AppCompatActivity {
      * @return String The transaction data.
      */
     private String generateTransactionData() throws JSONException {
+        Intent myIntent = getIntent();
+        String amountOfMoney = myIntent.getStringExtra(ReceiveMoneyActivity.AMOUNT_OF_MONEY_EXTRA);
+        String iban = getSharedPreferences(LoginActivity.PREFERENCES, Context.MODE_PRIVATE)
+                .getString(LoginActivity.IBAN_PREFS_KEY, null);
+
         JSONObject jsonParams = new JSONObject();
-        jsonParams.put(AMOUNT_OF_MONEY, mAmountOfMoney);
-        jsonParams.put(IBAN, mIban);
+        jsonParams.put(AMOUNT_OF_MONEY_QR_CODE_KEY, amountOfMoney);
+        jsonParams.put(IBAN_QR_CODE_KEY, iban);
 
         return jsonParams.toString();
     }

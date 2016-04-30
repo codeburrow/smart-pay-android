@@ -19,16 +19,21 @@ import com.google.android.gms.vision.Detector;
 import com.google.android.gms.vision.barcode.Barcode;
 import com.google.android.gms.vision.barcode.BarcodeDetector;
 
+import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
+import org.json.simple.parser.ParseException;
+
 public class ScanQrCodeActivity extends AppCompatActivity {
     public static final String LOG_TAG = ScanQrCodeActivity.class.getSimpleName();
 
     public static final String QR_INFO = "qrInfo";
+    public static final String AMOUNT_OF_MONEY_EXTRA = "amount-of-money-extra";
+    public static final String IBAN_EXTRA = "iban-extra";
 
     private final int REQUEST_CODE_ASK_PERMISSIONS = 123;
 
     SurfaceView cameraView;
     CameraSource cameraSource;
-    private String scannedIban;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -104,8 +109,6 @@ public class ScanQrCodeActivity extends AppCompatActivity {
 
             @Override
             public void receiveDetections(Detector.Detections<Barcode> detections) {
-                // Get the SparseArray of Barcode objects by calling the getDetectedItems() method
-                // of the Detector.Detections class.
                 final SparseArray<Barcode> barcodes = detections.getDetectedItems();
 
                 if (isQrCodeValid(barcodes)) {
@@ -115,10 +118,22 @@ public class ScanQrCodeActivity extends AppCompatActivity {
             }
 
             private void handleQrCodeDetection(final SparseArray<Barcode> barcodes) {
-                scannedIban = barcodes.valueAt(0).rawValue;
+                String qrCodeValues = barcodes.valueAt(0).rawValue;
+                JSONObject json = null;
+                try {
+                    json = (JSONObject) new JSONParser().parse(qrCodeValues);
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                    Toast.makeText(ScanQrCodeActivity.this, "Unable to extract data from QR code.", Toast.LENGTH_SHORT).show();
+                }
+
+
+                String amountOfMoney = (String) json.get(GenerateQrCodeActivity.AMOUNT_OF_MONEY_QR_CODE_KEY);
+                String iban = (String) json.get(GenerateQrCodeActivity.IBAN_QR_CODE_KEY);
 
                 Intent transferMoneyIntent = new Intent(getApplicationContext(), TransferMoneyActivity.class);
-                transferMoneyIntent.putExtra(QR_INFO, scannedIban);
+                transferMoneyIntent.putExtra(AMOUNT_OF_MONEY_EXTRA, amountOfMoney);
+                transferMoneyIntent.putExtra(IBAN_EXTRA, iban);
                 startActivity(transferMoneyIntent);
             }
 
@@ -129,8 +144,8 @@ public class ScanQrCodeActivity extends AppCompatActivity {
 
     }
 
-    public void showQrCode(View view) {
-        Intent showQrCodeIntent = new Intent(this, GetMoneyActivity.class);
+    public void startReceiveMoneyActivity(View view) {
+        Intent showQrCodeIntent = new Intent(this, ReceiveMoneyActivity.class);
         startActivity(showQrCodeIntent);
     }
 

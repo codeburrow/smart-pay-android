@@ -145,7 +145,7 @@ public class ScanQrCodeActivity extends AppCompatActivity {
     }
 
     public void startReceiveMoneyActivity(View view) {
-        Intent showQrCodeIntent = new Intent(this, ReceiveMoneyActivity.class);
+        Intent showQrCodeIntent = new Intent(this, InsertAmountToReceiveActivity.class);
         startActivity(showQrCodeIntent);
     }
 

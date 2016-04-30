@@ -23,7 +23,7 @@ public class GenerateQrCodeActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_show_qr_code);
+        setContentView(R.layout.activity_generate_qr_code);
 
         ImageView imageView = (ImageView) findViewById(R.id.imageView);
 
@@ -59,7 +59,7 @@ public class GenerateQrCodeActivity extends AppCompatActivity {
      */
     private String generateTransactionData() throws JSONException {
         Intent myIntent = getIntent();
-        String amountOfMoney = myIntent.getStringExtra(ReceiveMoneyActivity.AMOUNT_OF_MONEY_EXTRA);
+        String amountOfMoney = myIntent.getStringExtra(InsertAmountToReceiveActivity.AMOUNT_OF_MONEY_EXTRA);
         String iban = getSharedPreferences(LoginActivity.PREFERENCES, Context.MODE_PRIVATE)
                 .getString(LoginActivity.IBAN_PREFS_KEY, null);
 

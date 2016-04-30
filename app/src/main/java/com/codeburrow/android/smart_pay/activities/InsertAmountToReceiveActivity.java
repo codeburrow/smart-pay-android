@@ -9,15 +9,15 @@ import android.widget.Toast;
 
 import com.codeburrow.android.smart_pay.R;
 
-public class ReceiveMoneyActivity extends AppCompatActivity {
+public class InsertAmountToReceiveActivity extends AppCompatActivity {
     public static final String AMOUNT_OF_MONEY_EXTRA = "amount-of-money";
-    private static final String TAG = ReceiveMoneyActivity.class.getSimpleName();
+    private static final String TAG = InsertAmountToReceiveActivity.class.getSimpleName();
     private EditText mAmountOfMoney;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_receive_money);
+        setContentView(R.layout.activity_insert_amount_to_receive);
 
         mAmountOfMoney = (EditText) findViewById(R.id.amount_of_money_to_receive_edit_text);
     }
@@ -26,7 +26,7 @@ public class ReceiveMoneyActivity extends AppCompatActivity {
         String amountOfMoney = mAmountOfMoney.getText().toString();
 
         if (userInputIsValid(amountOfMoney)) {
-            Toast.makeText(ReceiveMoneyActivity.this, "Generating QR code...", Toast.LENGTH_SHORT).show();
+            Toast.makeText(InsertAmountToReceiveActivity.this, "Generating QR code...", Toast.LENGTH_SHORT).show();
             Intent myIntent = new Intent(this, GenerateQrCodeActivity.class);
             myIntent.putExtra(AMOUNT_OF_MONEY_EXTRA, amountOfMoney);
             startActivity(myIntent);
@@ -36,13 +36,12 @@ public class ReceiveMoneyActivity extends AppCompatActivity {
     private boolean userInputIsValid(String amountOfMoney) {
         try {
             if (Double.parseDouble(amountOfMoney) < 0) {
-                Toast.makeText(ReceiveMoneyActivity.this, "Amount of money need to be positive.", Toast.LENGTH_SHORT).show();
-                return true;
+                Toast.makeText(InsertAmountToReceiveActivity.this, "Amount of money need to be positive.", Toast.LENGTH_SHORT).show();
+                return false;
             }
         } catch (NumberFormatException numberFormatException) {
-            Toast.makeText(ReceiveMoneyActivity.this, "Not a valid amount of money", Toast.LENGTH_SHORT).show();
-            return true;
-        }
+            Toast.makeText(InsertAmountToReceiveActivity.this, "Not a valid amount of money", Toast.LENGTH_SHORT).show();
+            return false;        }
 
         return true;
     }

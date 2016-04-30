@@ -33,34 +33,35 @@
         <activity
             android:name=".activities.TransferMoneyActivity"
             android:noHistory="true"
-            android:parentActivityName="com.codeburrow.android.smart_pay.activities.ScanQrCodeActivity">
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.codeburrow.android.smart_pay.activities.ScanQrCodeActivity"/>
-        </activity>
-        <activity
-            android:name=".activities.ReceiveMoneyActivity"
-            android:noHistory="true"
-            android:parentActivityName="com.codeburrow.android.smart_pay.activities.ScanQrCodeActivity">
+            android:parentActivityName=".activities.ScanQrCodeActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".activities.ScanQrCodeActivity"/>
         </activity>
         <activity
-            android:name="com.codeburrow.android.smart_pay.activities.SuccessfulTransactionActivity"
+            android:name=".activities.InsertAmountToReceiveActivity"
+            android:windowSoftInputMode="stateVisible|adjustResize"
             android:noHistory="true"
-            android:parentActivityName="com.codeburrow.android.smart_pay.activities.ScanQrCodeActivity">
+            android:parentActivityName=".activities.ScanQrCodeActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.codeburrow.android.smart_pay.activities.ScanQrCodeActivity"/>
+                android:value=".activities.ScanQrCodeActivity"/>
+        </activity>
+        <activity
+            android:name=".activities.SuccessfulTransactionActivity"
+            android:noHistory="true"
+            android:parentActivityName=".activities.ScanQrCodeActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".activities.ScanQrCodeActivity"/>
         </activity>
         <activity
             android:name=".activities.GenerateQrCodeActivity"
             android:noHistory="true"
-            android:parentActivityName=".activities.ReceiveMoneyActivity">
+            android:parentActivityName=".activities.ScanQrCodeActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value=".activities.ReceiveMoneyActivity"/>
+                android:value=".activities.ScanQrCodeActivity"/>
         </activity>
     </application>
 

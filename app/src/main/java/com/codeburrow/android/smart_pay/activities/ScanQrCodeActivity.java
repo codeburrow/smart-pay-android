@@ -20,10 +20,12 @@ import com.google.android.gms.vision.barcode.Barcode;
 import com.google.android.gms.vision.barcode.BarcodeDetector;
 
 public class ScanQrCodeActivity extends AppCompatActivity {
-
     public static final String LOG_TAG = ScanQrCodeActivity.class.getSimpleName();
-    public static final String IBAN = "iban";
-    final private int REQUEST_CODE_ASK_PERMISSIONS = 123;
+
+    public static final String QR_INFO = "qrInfo";
+
+    private final int REQUEST_CODE_ASK_PERMISSIONS = 123;
+
     SurfaceView cameraView;
     CameraSource cameraSource;
     private String scannedIban;
@@ -118,7 +120,7 @@ public class ScanQrCodeActivity extends AppCompatActivity {
 //                Log.e(LOG_TAG, "JSON: \n" + scannedIban);
 
                 Intent transferMoneyIntent = new Intent(getApplicationContext(), TransferMoneyActivity.class);
-                transferMoneyIntent.putExtra(IBAN, scannedIban);
+                transferMoneyIntent.putExtra(QR_INFO, scannedIban);
                 startActivity(transferMoneyIntent);
             }
 

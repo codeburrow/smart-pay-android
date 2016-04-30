@@ -13,17 +13,17 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 public class AttemptToFindAccountTask extends AsyncTask<Void, Void, JSONObject> {
-    private final String TAG = AttemptToFindAccountTask.class.getSimpleName();
+    private final String LOG_TAG = AttemptToFindAccountTask.class.getSimpleName();
     private final Context mContext;
     private String iban;
-    public AsyncResponse delegate = null;
+    public AccountAsyncResponse delegate = null;
 
     // We may separate this or combined to caller class.
-    public interface AsyncResponse {
-        void processFinish();
+    public interface AccountAsyncResponse {
+        void processFindAccountAsyncFinish();
     }
 
-    public AttemptToFindAccountTask(Context context, AsyncResponse delegate, String iban) {
+    public AttemptToFindAccountTask(Context context, AccountAsyncResponse delegate, String iban) {
         super();
 
         this.delegate = delegate;
@@ -47,25 +47,28 @@ public class AttemptToFindAccountTask extends AsyncTask<Void, Void, JSONObject> 
         try {
             if (!apiResponse.has(Api.ACCOUNTS_KEY)) {
                 Toast.makeText(mContext, "API Error.", Toast.LENGTH_LONG).show();
+                Log.e(LOG_TAG, apiResponse.toString());
                 return;
             }
 
             JSONArray accounts = apiResponse.getJSONArray(Api.ACCOUNTS_KEY);
 
             if (accounts.length() == 0) {
-                Toast.makeText(mContext, "IBAN Validation Failed.", Toast.LENGTH_LONG).show();
+                Toast.makeText(mContext, "QR_INFO Validation Failed.", Toast.LENGTH_LONG).show();
+                Log.e(LOG_TAG, accounts.toString());
                 return;
             }
 
             JSONObject account = (JSONObject) accounts.get(0);
 
-            Toast.makeText(mContext, "IBAN validation successful.", Toast.LENGTH_SHORT).show();
+            Toast.makeText(mContext, "QR_INFO validation successful.", Toast.LENGTH_SHORT).show();
             Toast.makeText(mContext, account.toString(), Toast.LENGTH_LONG).show();
 
-            delegate.processFinish();
+            Log.e(LOG_TAG, account.toString());
+            delegate.processFindAccountAsyncFinish();
         } catch (JSONException e) {
             e.printStackTrace();
-            Log.e(TAG, e.getMessage());
+            Log.e(LOG_TAG, "CATCH EXCEPTION: " + e.getMessage());
         }
     }
 }

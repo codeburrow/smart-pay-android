@@ -10,9 +10,9 @@ import android.widget.EditText;
 
 import com.codeburrow.android.smart_pay.R;
 import com.codeburrow.android.smart_pay.tasks.AttemptToFindAccountTask;
-import com.codeburrow.android.smart_pay.tasks.AttemptToFindAccountTask.AsyncResponse;
 
-public class LoginActivity extends AppCompatActivity implements AsyncResponse {
+public class LoginActivity extends AppCompatActivity implements AttemptToFindAccountTask.AccountAsyncResponse {
+
     public static final String PREFERENCES = "Credentials";
     public static final String IBAN_PREFS_KEY = "ibanKey";
     public static final String PASSWORD_PREFS_KEY = "passKey";
@@ -43,7 +43,8 @@ public class LoginActivity extends AppCompatActivity implements AsyncResponse {
     }
 
     @Override
-    public void processFinish() {
+    public void processFindAccountAsyncFinish() {
         startActivity(new Intent(this, ScanQrCodeActivity.class));
+        finish();
     }
 }

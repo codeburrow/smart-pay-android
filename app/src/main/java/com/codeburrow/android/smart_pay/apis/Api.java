@@ -24,6 +24,7 @@ import java.io.UnsupportedEncodingException;
  */
 public abstract class Api {
     public static final String IBAN = "IBAN";
+    public static final String CUSTOMER_NUMBER = "customer_number";
     public static final String NBG_TRACK_ID = "nbgtrackid";
     public static final String PAYLOAD = "payload";
     public static final String CONTENT_TYPE = "Content-Type";
@@ -31,6 +32,7 @@ public abstract class Api {
     public static final String APPLICATION_JSON = "application/json";
     private static final String TAG = JsonParser.class.getSimpleName();
     public static final String ACCOUNTS_KEY = "accounts";
+    public static final String CUSTOMERS_KEY = "customers";
 
     protected JSONObject makePutRequest(String apiUrl, JSONObject jsonParams) {
         HttpPut httpPut = new HttpPut(apiUrl);

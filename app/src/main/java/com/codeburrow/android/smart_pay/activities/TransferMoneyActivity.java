@@ -13,18 +13,19 @@ import android.widget.Toast;
 
 import com.codeburrow.android.smart_pay.JsonParser;
 import com.codeburrow.android.smart_pay.R;
+import com.codeburrow.android.smart_pay.apis.AccountApi;
+import com.codeburrow.android.smart_pay.apis.CustomerApi;
 import com.codeburrow.android.smart_pay.tasks.AttemptToFindAccountTask;
 import com.codeburrow.android.smart_pay.tasks.AttemptToFindAccountTask.AccountAsyncResponse;
+import com.codeburrow.android.smart_pay.tasks.AttemptToFindCustomerTask;
+import com.codeburrow.android.smart_pay.tasks.AttemptToFindCustomerTask.CustomerAsyncResponse;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.UUID;
 
-public class TransferMoneyActivity extends AppCompatActivity implements AccountAsyncResponse {
-    // QR code reading constants
-    public static final String IBAN_QR_CODE_JSON_KEY = "mIban";
-    public static final String AMOUNT_OF_MONEY_QR_CODE_KEY = "amount-of-money";
+public class TransferMoneyActivity extends AppCompatActivity implements AccountAsyncResponse, CustomerAsyncResponse {
     private static final String LOG_TAG = TransferMoneyActivity.class.getSimpleName();
     private EditText passEditText;
     private TextView infoTextView;
@@ -32,7 +33,9 @@ public class TransferMoneyActivity extends AppCompatActivity implements AccountA
     // QR code information
     private String mIban;
     private String mAmountOfMoney;
-    private boolean validateReceiver = false;
+    private boolean showReceiverToUser = false;
+
+    private String receiverOwnerName;
 
     private String uuid = "codeburrow.com";
 
@@ -59,8 +62,8 @@ public class TransferMoneyActivity extends AppCompatActivity implements AccountA
     }
 
     public void updateInfoText() {
-        if (validateReceiver) {
-            infoTextView.setText("Send to\nIBAN: " + mIban + "\nThe amount of: " + mAmountOfMoney + "$\nuuid: " + uuid);
+        if (showReceiverToUser) {
+            infoTextView.setText("Send to\nNAME: " + receiverOwnerName + "\nIBAN: " + mIban + "\nThe amount of: " + mAmountOfMoney + " EUR\nuuid: " + uuid);
         } else {
             infoTextView.setText("Scanned an INVALID IBAN");
         }
@@ -69,7 +72,7 @@ public class TransferMoneyActivity extends AppCompatActivity implements AccountA
     public void verifyTransaction(View view) {
         String password = passEditText.getText().toString();
 
-        if (validateReceiver) {
+        if (showReceiverToUser) {
             if (validatePassword(password)) {
                 AttemptToMakeTransactionTask attemptToMakeTransactionTask = new AttemptToMakeTransactionTask();
                 attemptToMakeTransactionTask.execute();
@@ -108,8 +111,17 @@ public class TransferMoneyActivity extends AppCompatActivity implements AccountA
     }
 
     @Override
-    public void processFindAccountAsyncFinish() {
-        validateReceiver = true;
+    public void processFindAccountAsyncFinish(JSONObject receiverAccount) {
+        AttemptToFindCustomerTask attemptToFindCustomerTask = new AttemptToFindCustomerTask(getApplicationContext(), this, AccountApi.findFirstCustomerNumberFromAccount(receiverAccount));
+        attemptToFindCustomerTask.execute();
+    }
+
+    @Override
+    public void processFindCustomerAsyncFinish(JSONObject receiverCustomer) {
+        receiverOwnerName = CustomerApi.findLegalNameFromCustomer(receiverCustomer);
+
+        showReceiverToUser = true;
+
         updateInfoText();
     }
 

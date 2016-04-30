@@ -66,7 +66,7 @@ public class AttemptToFindCustomerTask extends AsyncTask<Void, Void, JSONObject>
             Toast.makeText(mContext, customer.toString(), Toast.LENGTH_LONG).show();
 
             Log.e(LOG_TAG, customer.toString());
-            delegate.processFindCustomerAsyncFinish();
+            delegate.processFindCustomerAsyncFinish(customer);
         } catch (JSONException e) {
             e.printStackTrace();
             Log.e(LOG_TAG, "CATCH EXCEPTION: " + e.getMessage());
@@ -74,6 +74,6 @@ public class AttemptToFindCustomerTask extends AsyncTask<Void, Void, JSONObject>
     }
 
     public interface CustomerAsyncResponse {
-        void processFindCustomerAsyncFinish();
+        void processFindCustomerAsyncFinish(JSONObject customer);
     }
 }

@@ -64,7 +64,7 @@ public class AttemptToFindAccountTask extends AsyncTask<Void, Void, JSONObject> 
             Toast.makeText(mContext, "Authentication successful.", Toast.LENGTH_SHORT).show();
 
             Log.e(LOG_TAG, account.toString());
-            delegate.processFindAccountAsyncFinish();
+            delegate.processFindAccountAsyncFinish(account);
         } catch (JSONException e) {
             e.printStackTrace();
             Log.e(LOG_TAG, "CATCH EXCEPTION: " + e.getMessage());
@@ -72,6 +72,6 @@ public class AttemptToFindAccountTask extends AsyncTask<Void, Void, JSONObject> 
     }
 
     public interface AccountAsyncResponse {
-        void processFindAccountAsyncFinish();
+        void processFindAccountAsyncFinish(JSONObject foundAccount);
     }
 }

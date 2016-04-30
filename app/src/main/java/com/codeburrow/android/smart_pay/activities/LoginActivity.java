@@ -9,16 +9,28 @@ import android.view.View;
 import android.widget.EditText;
 
 import com.codeburrow.android.smart_pay.R;
+import com.codeburrow.android.smart_pay.apis.AccountApi;
+import com.codeburrow.android.smart_pay.apis.CustomerApi;
 import com.codeburrow.android.smart_pay.tasks.AttemptToFindAccountTask;
+import com.codeburrow.android.smart_pay.tasks.AttemptToFindAccountTask.AccountAsyncResponse;
+import com.codeburrow.android.smart_pay.tasks.AttemptToFindCustomerTask;
+import com.codeburrow.android.smart_pay.tasks.AttemptToFindCustomerTask.CustomerAsyncResponse;
 
-public class LoginActivity extends AppCompatActivity implements AttemptToFindAccountTask.AccountAsyncResponse {
+import org.json.JSONObject;
+
+public class LoginActivity extends AppCompatActivity implements AccountAsyncResponse, CustomerAsyncResponse {
+    private static final String LOG_TAG = LoginActivity.class.getSimpleName();
 
     public static final String PREFERENCES = "Credentials";
     public static final String IBAN_PREFS_KEY = "ibanKey";
+    public static final String OWNER_PREFS_KEY = "ownerKey";
     public static final String PASSWORD_PREFS_KEY = "passKey";
-    private static final String LOG_TAG = LoginActivity.class.getSimpleName();
+
     private EditText mIbanEditText;
     private EditText mPasswordEditText;
+
+    private String iban;
+    private String password;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -30,21 +42,29 @@ public class LoginActivity extends AppCompatActivity implements AttemptToFindAcc
     }
 
     public void login(View view) {
-        String iban = mIbanEditText.getText().toString();
-        String password = mPasswordEditText.getText().toString();
-
-        SharedPreferences.Editor editor = getSharedPreferences(PREFERENCES, Context.MODE_PRIVATE).edit();
-        editor.putString(IBAN_PREFS_KEY, iban);
-        editor.putString(PASSWORD_PREFS_KEY, password);
-        editor.commit();
+        iban = mIbanEditText.getText().toString();
+        password = mPasswordEditText.getText().toString();
 
         AttemptToFindAccountTask attemptToFindAccountTask = new AttemptToFindAccountTask(getApplicationContext(), this, iban);
         attemptToFindAccountTask.execute();
     }
 
     @Override
-    public void processFindAccountAsyncFinish() {
+    public void processFindAccountAsyncFinish(JSONObject loginAccount) {
+            AttemptToFindCustomerTask attemptToFindCustomerTask = new AttemptToFindCustomerTask(getApplicationContext(), this, AccountApi.findFirstCustomerNumberFromAccount(loginAccount));
+            attemptToFindCustomerTask.execute();
+    }
+
+    @Override
+    public void processFindCustomerAsyncFinish(JSONObject loginCustomer) {
+        SharedPreferences.Editor editor = getSharedPreferences(PREFERENCES, Context.MODE_PRIVATE).edit();
+        editor.putString(IBAN_PREFS_KEY, iban);
+        editor.putString(PASSWORD_PREFS_KEY, password);
+        editor.putString(OWNER_PREFS_KEY, CustomerApi.findLegalNameFromCustomer(loginCustomer));
+        editor.commit();
+
         startActivity(new Intent(this, ScanQrCodeActivity.class));
         finish();
     }
+
 }

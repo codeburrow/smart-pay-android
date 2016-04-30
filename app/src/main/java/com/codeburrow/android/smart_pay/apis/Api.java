@@ -32,7 +32,9 @@ public abstract class Api {
     public static final String APPLICATION_JSON = "application/json";
     private static final String TAG = JsonParser.class.getSimpleName();
     public static final String ACCOUNTS_KEY = "accounts";
+    public static final String ACCOUNT_OWNERS_KEY = "owners";
     public static final String CUSTOMERS_KEY = "customers";
+    public static final String CUSTOMER_LEGAL_NAME_KEY = "legal_name";
 
     protected JSONObject makePutRequest(String apiUrl, JSONObject jsonParams) {
         HttpPut httpPut = new HttpPut(apiUrl);

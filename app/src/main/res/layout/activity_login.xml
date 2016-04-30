@@ -12,7 +12,7 @@
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="16dp"
         android:hint="@string/enter_your_iban"
-        android:text="@string/iban11222666" />
+        android:text="@string/iban11223377" />
 
     <EditText
         android:id="@+id/password_editText"
@@ -38,7 +38,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="32dp"
-        android:text="@string/some_valid_iban_n_niban11222666_niban7893560885_niban9786691124_niban4646012056_niban4266186037"
+        android:text="@string/some_valid_iban"
         android:textAlignment="center" />
 
 </LinearLayout>

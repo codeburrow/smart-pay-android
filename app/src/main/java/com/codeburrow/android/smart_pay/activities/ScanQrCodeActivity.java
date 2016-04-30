@@ -1,6 +1,7 @@
 package com.codeburrow.android.smart_pay.activities;
 
 import android.Manifest;
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Build;
@@ -26,7 +27,6 @@ import org.json.simple.parser.ParseException;
 public class ScanQrCodeActivity extends AppCompatActivity {
     public static final String LOG_TAG = ScanQrCodeActivity.class.getSimpleName();
 
-    public static final String QR_INFO = "qrInfo";
     public static final String AMOUNT_OF_MONEY_EXTRA = "amount-of-money-extra";
     public static final String IBAN_EXTRA = "iban-extra";
 
@@ -39,6 +39,8 @@ public class ScanQrCodeActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_scan_qr_code);
+
+        Log.e(LOG_TAG, getSharedPreferences(LoginActivity.PREFERENCES, Context.MODE_PRIVATE).getAll().toString());
 
         cameraView = (SurfaceView) findViewById(R.id.camera_view);
 

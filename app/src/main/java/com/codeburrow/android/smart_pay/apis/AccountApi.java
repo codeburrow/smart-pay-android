@@ -2,6 +2,7 @@ package com.codeburrow.android.smart_pay.apis;
 
 import android.util.Log;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -32,4 +33,23 @@ public class AccountApi extends Api {
 
         return makePostRequest(API_URL, parametersJson);
     }
+
+    /**
+     * Get the first owner (customer_number in Customer.Api terms) of this account
+     *
+     * @param account
+     * @return
+     */
+    public static String findFirstCustomerNumberFromAccount(JSONObject account){
+        try {
+            JSONArray owners = account.getJSONArray(Api.ACCOUNT_OWNERS_KEY);
+
+            return owners.get(0).toString();
+        } catch (JSONException e) {
+            e.getStackTrace();
+            Log.e(TAG, e.getMessage());
+        }
+        return null;
+    }
+
 }

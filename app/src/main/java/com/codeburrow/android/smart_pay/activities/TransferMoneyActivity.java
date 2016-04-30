@@ -13,8 +13,8 @@ import android.widget.Toast;
 
 import com.codeburrow.android.smart_pay.JsonParser;
 import com.codeburrow.android.smart_pay.R;
-import com.codeburrow.android.smart_pay.async_tasks.AttemptToFindAccountTask;
-import com.codeburrow.android.smart_pay.async_tasks.AttemptToFindAccountTask.AccountAsyncResponse;
+import com.codeburrow.android.smart_pay.tasks.AttemptToFindAccountTask;
+import com.codeburrow.android.smart_pay.tasks.AttemptToFindAccountTask.AccountAsyncResponse;
 
 import org.json.JSONException;
 import org.json.JSONObject;

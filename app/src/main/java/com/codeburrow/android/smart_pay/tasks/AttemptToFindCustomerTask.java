@@ -5,7 +5,7 @@ import android.os.AsyncTask;
 import android.util.Log;
 import android.widget.Toast;
 
-import com.codeburrow.android.smart_pay.api.Api;
+import com.codeburrow.android.smart_pay.apis.Api;
 import com.codeburrow.android.smart_pay.apis.CustomerApi;
 
 import org.json.JSONArray;
@@ -13,23 +13,18 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 /**
- * Created by George Spiridakis <george@codeburrow.com>
- * on 4/30/2016.
- * ====================================================
- * CODEBURROW
+ * @author George Spiridakis <george@codeburrow.com>
+ * @author Rizart Dokollari <r.dokollari@gmail.com>
+ * @since 4/30/2016
  */
 public class AttemptToFindCustomerTask extends AsyncTask<Void, Void, JSONObject> {
     private final String LOG_TAG = AttemptToFindAccountTask.class.getSimpleName();
     private final Context mContext;
-    private String customerNumber;
     public CustomerAsyncResponse delegate = null;
+    private String customerNumber;
 
-    // We may separate this or combined to caller class.
-    public interface CustomerAsyncResponse {
-        void processFindCustomerAsyncFinish();
-    }
-
-    public AttemptToFindCustomerTask(Context context, CustomerAsyncResponse delegate, String customerNumber) {
+    public AttemptToFindCustomerTask(Context context, CustomerAsyncResponse delegate,
+                                     String customerNumber) {
         super();
 
         this.delegate = delegate;
@@ -76,5 +71,9 @@ public class AttemptToFindCustomerTask extends AsyncTask<Void, Void, JSONObject>
             e.printStackTrace();
             Log.e(LOG_TAG, "CATCH EXCEPTION: " + e.getMessage());
         }
+    }
+
+    public interface CustomerAsyncResponse {
+        void processFindCustomerAsyncFinish();
     }
 }

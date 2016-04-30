@@ -13,6 +13,7 @@ import android.widget.Toast;
 
 import com.codeburrow.android.smart_pay.JsonParser;
 import com.codeburrow.android.smart_pay.R;
+import com.codeburrow.android.smart_pay.async_tasks.AttemptToFindAccountTask;
 import com.codeburrow.android.smart_pay.async_tasks.AttemptToFindAccountTask.AsyncResponse;
 
 import org.json.JSONException;
@@ -33,6 +34,7 @@ public class TransferMoneyActivity extends AppCompatActivity implements AsyncRes
     // QR code information
     private String iban;
     private String amountOfMoney;
+    private boolean validateReceiver = false;
 
     private String uuid = "codeburrow.com";
 
@@ -46,16 +48,12 @@ public class TransferMoneyActivity extends AppCompatActivity implements AsyncRes
 
         String qrCodeJsonStr = getIntent().getStringExtra(ScanQrCodeActivity.QR_INFO);
         readQrCode(qrCodeJsonStr);
-        updateInfoText();
-    }
 
-    @Override
-    public void onBackPressed() {
-        startActivity(new Intent(this, ScanQrCodeActivity.class));
+        AttemptToFindAccountTask attemptToFindAccountTask = new AttemptToFindAccountTask(getApplicationContext(), this, iban);
+        attemptToFindAccountTask.execute();
     }
 
     /**
-     *
      * @param qrCodeJsonStr the json formatted String from the QR code (intent)
      */
     private void readQrCode(String qrCodeJsonStr) {
@@ -66,13 +64,46 @@ public class TransferMoneyActivity extends AppCompatActivity implements AsyncRes
             amountOfMoney = qrCodeJsonObject.getString(AMOUNT_OF_MONEY_QR_CODE_KEY);
 
             Log.e(LOG_TAG, "Send to\nQR_INFO: " + iban + "\nThe amount of: " + amountOfMoney + "$\nuuid: " + uuid);
+            updateInfoText();
         } catch (JSONException e) {
             Log.e(LOG_TAG, e.getMessage());
+
+            infoTextView.setText("What are you looking for?");
         }
     }
 
-    private void updateInfoText(){
-        infoTextView.setText("Send to\nIBAN: " + iban + "\nThe amount of: " + amountOfMoney + "$\nuuid: " + uuid);
+    public void updateInfoText(){
+        if (validateReceiver) {
+            infoTextView.setText("Send to\nIBAN: " + iban + "\nThe amount of: " + amountOfMoney + "$\nuuid: " + uuid);
+        } else {
+            infoTextView.setText("Scanned an INVALID IBAN");
+        }
+    }
+
+    public void verifyTransaction(View view) {
+        String password = passEditText.getText().toString();
+
+        if (validateReceiver) {
+            if (validatePassword(password)) {
+                AttemptToMakeTransactionTask attemptToMakeTransactionTask = new AttemptToMakeTransactionTask();
+                attemptToMakeTransactionTask.execute();
+            } else {
+                toast("Wrong password.");
+            }
+        } else {
+            toast("Invalid IBAN");
+        }
+
+    }
+
+    public boolean validatePassword(String password) {
+        String storedPassword = getSharedPreferences(LoginActivity.PREFERENCES, Context.MODE_PRIVATE).getString(LoginActivity.PASSWORD_PREFS_KEY, null);
+
+        if (storedPassword != null & storedPassword.equals(password)) {
+            return true;
+        }
+
+        return false;
     }
 
     /**
@@ -87,22 +118,16 @@ public class TransferMoneyActivity extends AppCompatActivity implements AsyncRes
         toast.show();
     }
 
-
-    public void verifyTransaction(View view) {
-        String pass = passEditText.getText().toString();
-        if ("1234".equals(pass)) {
-
-            AttemptToMakeTransactionTask attemptToMakeTransactionTask = new AttemptToMakeTransactionTask();
-            attemptToMakeTransactionTask.execute();
-
-        } else {
-            toast("Wrong pass\nPlease try again");
-        }
+    @Override
+    public void onBackPressed() {
+        startActivity(new Intent(this, ScanQrCodeActivity.class));
+        finish();
     }
 
     @Override
     public void processFindAccountAsyncFinish() {
-
+        validateReceiver = true;
+        updateInfoText();
     }
 
 

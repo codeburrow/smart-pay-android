@@ -46,6 +46,7 @@ public class AttemptToFindAccountTask extends AsyncTask<Void, Void, JSONObject> 
 
         try {
             if (!apiResponse.has(Api.ACCOUNTS_KEY)) {
+                Log.e(TAG, apiResponse.toString());
                 Toast.makeText(mContext, "API Error.", Toast.LENGTH_LONG).show();
                 return;
             }

@@ -23,7 +23,7 @@ import java.io.UnsupportedEncodingException;
  * @since 4/29/16
  */
 public abstract class Api {
-    public static final String IBAN = "QR_INFO";
+    public static final String IBAN = "IBAN";
     public static final String NBG_TRACK_ID = "nbgtrackid";
     public static final String PAYLOAD = "payload";
     public static final String CONTENT_TYPE = "Content-Type";

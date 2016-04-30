@@ -1,4 +1,4 @@
-package com.codeburrow.android.smart_pay.api;
+package com.codeburrow.android.smart_pay.apis;
 
 import android.util.Log;
 

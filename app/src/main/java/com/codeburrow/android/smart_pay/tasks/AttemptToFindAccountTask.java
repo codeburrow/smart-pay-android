@@ -1,12 +1,12 @@
-package com.codeburrow.android.smart_pay.async_tasks;
+package com.codeburrow.android.smart_pay.tasks;
 
 import android.content.Context;
 import android.os.AsyncTask;
 import android.util.Log;
 import android.widget.Toast;
 
-import com.codeburrow.android.smart_pay.api.AccountApi;
-import com.codeburrow.android.smart_pay.api.Api;
+import com.codeburrow.android.smart_pay.apis.AccountApi;
+import com.codeburrow.android.smart_pay.apis.Api;
 
 import org.json.JSONArray;
 import org.json.JSONException;

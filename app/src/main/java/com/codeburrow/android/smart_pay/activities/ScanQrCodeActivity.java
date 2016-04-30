@@ -130,7 +130,7 @@ public class ScanQrCodeActivity extends AppCompatActivity {
     }
 
     public void showQrCode(View view) {
-        Intent showQrCodeIntent = new Intent(this, ShowQrCodeActivity.class);
+        Intent showQrCodeIntent = new Intent(this, GetMoneyActivity.class);
         startActivity(showQrCodeIntent);
     }
 

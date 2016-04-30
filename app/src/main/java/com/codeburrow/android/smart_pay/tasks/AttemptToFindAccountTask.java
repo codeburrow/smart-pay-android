@@ -1,12 +1,12 @@
-package com.codeburrow.android.smart_pay.async_tasks;
+package com.codeburrow.android.smart_pay.tasks;
 
 import android.content.Context;
 import android.os.AsyncTask;
 import android.util.Log;
 import android.widget.Toast;
 
-import com.codeburrow.android.smart_pay.api.AccountApi;
-import com.codeburrow.android.smart_pay.api.Api;
+import com.codeburrow.android.smart_pay.apis.AccountApi;
+import com.codeburrow.android.smart_pay.apis.Api;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -15,13 +15,8 @@ import org.json.JSONObject;
 public class AttemptToFindAccountTask extends AsyncTask<Void, Void, JSONObject> {
     private final String LOG_TAG = AttemptToFindAccountTask.class.getSimpleName();
     private final Context mContext;
-    private String iban;
     public AccountAsyncResponse delegate = null;
-
-    // We may separate this or combined to caller class.
-    public interface AccountAsyncResponse {
-        void processFindAccountAsyncFinish();
-    }
+    private String iban;
 
     public AttemptToFindAccountTask(Context context, AccountAsyncResponse delegate, String iban) {
         super();
@@ -54,14 +49,19 @@ public class AttemptToFindAccountTask extends AsyncTask<Void, Void, JSONObject> 
             JSONArray accounts = apiResponse.getJSONArray(Api.ACCOUNTS_KEY);
 
             if (accounts.length() == 0) {
-                Toast.makeText(mContext, "QR_INFO Validation Failed.", Toast.LENGTH_LONG).show();
+                // Removed QR_INFO. The authentication only checks the IBAN typed by the user.
+                // It does not do work with QR.
+                // Remove this comment when you read this.
+                // In any case, this task does not care from where it is used.
+                // Toast your message from the QR activity.
+                Toast.makeText(mContext, "Invalid Credentials.", Toast.LENGTH_LONG).show();
                 Log.e(LOG_TAG, accounts.toString());
                 return;
             }
 
             JSONObject account = (JSONObject) accounts.get(0);
 
-            Toast.makeText(mContext, "QR_INFO validation successful.", Toast.LENGTH_SHORT).show();
+            Toast.makeText(mContext, "Authentication successful.", Toast.LENGTH_SHORT).show();
             Toast.makeText(mContext, account.toString(), Toast.LENGTH_LONG).show();
 
             Log.e(LOG_TAG, account.toString());
@@ -70,5 +70,9 @@ public class AttemptToFindAccountTask extends AsyncTask<Void, Void, JSONObject> 
             e.printStackTrace();
             Log.e(LOG_TAG, "CATCH EXCEPTION: " + e.getMessage());
         }
+    }
+
+    public interface AccountAsyncResponse {
+        void processFindAccountAsyncFinish();
     }
 }

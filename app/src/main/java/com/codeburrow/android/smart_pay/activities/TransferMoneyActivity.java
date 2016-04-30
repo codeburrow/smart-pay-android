@@ -13,8 +13,8 @@ import android.widget.Toast;
 
 import com.codeburrow.android.smart_pay.JsonParser;
 import com.codeburrow.android.smart_pay.R;
-import com.codeburrow.android.smart_pay.async_tasks.AttemptToFindAccountTask;
-import com.codeburrow.android.smart_pay.async_tasks.AttemptToFindAccountTask.AccountAsyncResponse;
+import com.codeburrow.android.smart_pay.tasks.AttemptToFindAccountTask;
+import com.codeburrow.android.smart_pay.tasks.AttemptToFindAccountTask.AccountAsyncResponse;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -22,12 +22,10 @@ import org.json.JSONObject;
 import java.util.UUID;
 
 public class TransferMoneyActivity extends AppCompatActivity implements AccountAsyncResponse {
-    private static final String LOG_TAG = TransferMoneyActivity.class.getSimpleName();
-
     // QR code reading constants
     public static final String IBAN_QR_CODE_JSON_KEY = "iban";
     public static final String AMOUNT_OF_MONEY_QR_CODE_KEY = "amount-of-money";
-
+    private static final String LOG_TAG = TransferMoneyActivity.class.getSimpleName();
     private EditText passEditText;
     private TextView infoTextView;
 
@@ -72,7 +70,7 @@ public class TransferMoneyActivity extends AppCompatActivity implements AccountA
         }
     }
 
-    public void updateInfoText(){
+    public void updateInfoText() {
         if (validateReceiver) {
             infoTextView.setText("Send to\nIBAN: " + iban + "\nThe amount of: " + amountOfMoney + "$\nuuid: " + uuid);
         } else {
@@ -97,13 +95,10 @@ public class TransferMoneyActivity extends AppCompatActivity implements AccountA
     }
 
     public boolean validatePassword(String password) {
-        String storedPassword = getSharedPreferences(LoginActivity.PREFERENCES, Context.MODE_PRIVATE).getString(LoginActivity.PASSWORD_PREFS_KEY, null);
+        String storedPassword = getSharedPreferences(LoginActivity.PREFERENCES, Context.MODE_PRIVATE)
+                .getString(LoginActivity.PASSWORD_PREFS_KEY, null);
 
-        if (storedPassword != null & storedPassword.equals(password)) {
-            return true;
-        }
-
-        return false;
+        return storedPassword != null & storedPassword.equals(password);
     }
 
     /**

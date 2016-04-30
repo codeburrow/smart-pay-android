@@ -39,7 +39,7 @@
                 android:value="com.codeburrow.android.smart_pay.activities.ScanQrCodeActivity" />
         </activity>
         <activity
-            android:name=".activities.ShowQrCodeActivity"
+            android:name=".activities.GetMoneyActivity"
             android:noHistory="true"
             android:parentActivityName="com.codeburrow.android.smart_pay.activities.ScanQrCodeActivity">
             <meta-data

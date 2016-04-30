@@ -63,7 +63,6 @@ public class ScanQrCodeActivity extends AppCompatActivity {
         cameraView.getHolder().addCallback(new SurfaceHolder.Callback() {
             @Override
             public void surfaceCreated(SurfaceHolder holder) {
-                // Call the start method of the CameraSource to start drawing the preview frames.
                 try {
                     if (Build.VERSION.SDK_INT >= 23) {
                         int hasWriteContactsPermission = checkSelfPermission(Manifest.permission.CAMERA);
@@ -117,7 +116,6 @@ public class ScanQrCodeActivity extends AppCompatActivity {
 
             private void handleQrCodeDetection(final SparseArray<Barcode> barcodes) {
                 scannedIban = barcodes.valueAt(0).rawValue;
-//                Log.e(LOG_TAG, "JSON: \n" + scannedIban);
 
                 Intent transferMoneyIntent = new Intent(getApplicationContext(), TransferMoneyActivity.class);
                 transferMoneyIntent.putExtra(QR_INFO, scannedIban);

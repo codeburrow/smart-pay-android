@@ -7,7 +7,18 @@ import android.view.View;
 
 import com.codeburrow.android.smart_pay.R;
 
+/**
+ * @author George Spiridakis <george@codeburrow.com>
+ * @author Rizart Dokollari <r.dokollari@gmail.com>
+ * @since 23-24/30/2016.
+ * ====================================================
+ * CODE BURROW
+ * ====================================================
+ */
+
 public class SuccessfulTransactionActivity extends AppCompatActivity {
+
+    public static final String LOG_TAG = SuccessfulTransactionActivity.class.getSimpleName();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

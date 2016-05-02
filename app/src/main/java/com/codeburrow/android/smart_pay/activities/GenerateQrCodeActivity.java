@@ -15,10 +15,21 @@ import com.google.zxing.WriterException;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+/**
+ * @author George Spiridakis <george@codeburrow.com>
+ * @author Rizart Dokollari <r.dokollari@gmail.com>
+ * @since 23-24/30/2016.
+ * ====================================================
+ * CODE BURROW
+ * ====================================================
+ */
+
 public class GenerateQrCodeActivity extends AppCompatActivity {
+
+    private static final String LOG_TAG = GenerateQrCodeActivity.class.getSimpleName();
+
     public static final String AMOUNT_OF_MONEY_QR_CODE_KEY = "amount-of-money";
     public static final String IBAN_QR_CODE_KEY = "iban";
-    private static final String TAG = GenerateQrCodeActivity.class.getSimpleName();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

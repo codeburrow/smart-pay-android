@@ -17,6 +17,7 @@ import org.json.JSONObject;
  * @author Rizart Dokollari <r.dokollari@gmail.com>
  * @since 4/30/2016
  */
+
 public class AttemptToFindCustomerTask extends AsyncTask<Void, Void, JSONObject> {
     private final String LOG_TAG = AttemptToFindAccountTask.class.getSimpleName();
     private final Context mContext;

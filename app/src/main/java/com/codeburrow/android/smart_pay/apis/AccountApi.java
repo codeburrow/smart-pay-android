@@ -10,11 +10,13 @@ import java.util.UUID;
 
 /**
  * @author Rizart Dokollari <r.dokollari@gmail.com>
+ * @author George Spiridakis <george@codeburrow.com>
  * @since 4/29/16
  */
+
 public class AccountApi extends Api {
 
-    static final String TAG = AccountApi.class.getSimpleName();
+    static final String LOG_TAG = AccountApi.class.getSimpleName();
     static String API_URL = "https://nbgdemo.azure-api.net/nodeopenapi/api/accounts/rest";
 
     public JSONObject findByIban(String iban) {
@@ -28,7 +30,7 @@ public class AccountApi extends Api {
             parametersJson.put(PAYLOAD, payloadJson);
         } catch (JSONException e) {
             e.printStackTrace();
-            Log.e(TAG, e.getMessage());
+            Log.e(LOG_TAG, e.getMessage());
         }
 
         return makePostRequest(API_URL, parametersJson);
@@ -47,7 +49,7 @@ public class AccountApi extends Api {
             return owners.get(0).toString();
         } catch (JSONException e) {
             e.getStackTrace();
-            Log.e(TAG, e.getMessage());
+            Log.e(LOG_TAG, e.getMessage());
         }
         return null;
     }

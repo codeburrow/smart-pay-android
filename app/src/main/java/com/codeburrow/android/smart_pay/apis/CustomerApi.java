@@ -9,11 +9,13 @@ import java.util.UUID;
 
 /**
  * @author George Spiridakis <george@codeburrow.com>
+ * @author Rizart Dokollari <r.dokollari@gmail.com>
  * @since 4/30/2016.
  * ====================================================
  * CODE BURROW
  * ====================================================
  */
+
 public class CustomerApi extends Api {
 
     static final String LOG_TAG = AccountApi.class.getSimpleName();

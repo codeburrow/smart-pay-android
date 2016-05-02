@@ -34,10 +34,12 @@ import java.util.Map;
  * @author dswitkin@google.com (Daniel Switkin)
  * @author Rizart Dokollari <r.dokollari@gmail.com>
  */
+
 public final class QRCodeEncoder {
 
+    private static final String LOG_TAG = QRCodeEncoder.class.getSimpleName();
+
     public static final String UTF_8 = "UTF-8";
-    private static final String TAG = QRCodeEncoder.class.getSimpleName();
     private static final int WHITE = 0xFFFFFFFF;
     private static final int BLACK = 0xFF000000;
     private String contents;

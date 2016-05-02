@@ -25,8 +25,19 @@ import org.json.JSONObject;
 
 import java.util.UUID;
 
+/**
+ * @author George Spiridakis <george@codeburrow.com>
+ * @author Rizart Dokollari <r.dokollari@gmail.com>
+ * @since 23-24/30/2016.
+ * ====================================================
+ * CODE BURROW
+ * ====================================================
+ */
+
 public class TransferMoneyActivity extends AppCompatActivity implements AccountAsyncResponse, CustomerAsyncResponse {
-    private static final String LOG_TAG = TransferMoneyActivity.class.getSimpleName();
+
+    public static final String LOG_TAG = TransferMoneyActivity.class.getSimpleName();
+
     private EditText passEditText;
     private TextView infoTextView;
 

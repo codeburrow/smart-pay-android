@@ -12,6 +12,12 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+/**
+ * @author George Spiridakis <george@codeburrow.com>
+ * @author Rizart Dokollari <r.dokollari@gmail.com>
+ * @since 4/30/2016
+ */
+
 public class AttemptToFindAccountTask extends AsyncTask<Void, Void, JSONObject> {
     private final String LOG_TAG = AttemptToFindAccountTask.class.getSimpleName();
     private final Context mContext;

@@ -18,7 +18,17 @@ import com.codeburrow.android.smart_pay.tasks.AttemptToFindCustomerTask.Customer
 
 import org.json.JSONObject;
 
+/**
+ * @author George Spiridakis <george@codeburrow.com>
+ * @author Rizart Dokollari <r.dokollari@gmail.com>
+ * @since 23-24/30/2016.
+ * ====================================================
+ * CODE BURROW
+ * ====================================================
+ */
+
 public class LoginActivity extends AppCompatActivity implements AccountAsyncResponse, CustomerAsyncResponse {
+
     private static final String LOG_TAG = LoginActivity.class.getSimpleName();
 
     public static final String PREFERENCES = "Credentials";

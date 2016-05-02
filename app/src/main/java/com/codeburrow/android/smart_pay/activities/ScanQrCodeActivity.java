@@ -24,7 +24,17 @@ import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 
+/**
+ * @author George Spiridakis <george@codeburrow.com>
+ * @author Rizart Dokollari <r.dokollari@gmail.com>
+ * @since 23-24/30/2016.
+ * ====================================================
+ * CODE BURROW
+ * ====================================================
+ */
+
 public class ScanQrCodeActivity extends AppCompatActivity {
+
     public static final String LOG_TAG = ScanQrCodeActivity.class.getSimpleName();
 
     public static final String AMOUNT_OF_MONEY_EXTRA = "amount-of-money-extra";

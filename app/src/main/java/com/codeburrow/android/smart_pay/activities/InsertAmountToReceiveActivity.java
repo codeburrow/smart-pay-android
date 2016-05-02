@@ -9,9 +9,20 @@ import android.widget.Toast;
 
 import com.codeburrow.android.smart_pay.R;
 
+/**
+ * @author George Spiridakis <george@codeburrow.com>
+ * @author Rizart Dokollari <r.dokollari@gmail.com>
+ * @since 23-24/30/2016.
+ * ====================================================
+ * CODE BURROW
+ * ====================================================
+ */
+
 public class InsertAmountToReceiveActivity extends AppCompatActivity {
+
+    private static final String LOG_TAG = InsertAmountToReceiveActivity.class.getSimpleName();
+
     public static final String AMOUNT_OF_MONEY_EXTRA = "amount-of-money";
-    private static final String TAG = InsertAmountToReceiveActivity.class.getSimpleName();
     private EditText mAmountOfMoney;
 
     @Override

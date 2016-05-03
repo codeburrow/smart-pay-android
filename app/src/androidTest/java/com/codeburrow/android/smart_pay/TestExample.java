@@ -1,4 +1,4 @@
-package com.codeburrow.android.smart_pay.tasks;
+package com.codeburrow.android.smart_pay;
 
 import android.test.AndroidTestCase;
 

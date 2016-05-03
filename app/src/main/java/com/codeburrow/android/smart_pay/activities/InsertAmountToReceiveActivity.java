@@ -12,10 +12,10 @@ import com.codeburrow.android.smart_pay.R;
 /**
  * @author George Spiridakis <george@codeburrow.com>
  * @author Rizart Dokollari <r.dokollari@gmail.com>
- * @since 23-24/30/2016.
- * ====================================================
- * CODE BURROW
- * ====================================================
+ * @since 4/23-24/2016.
+ * ===================================================
+ * ---------->    http://codeburrow.com    <----------
+ * ===================================================
  */
 
 public class InsertAmountToReceiveActivity extends AppCompatActivity {

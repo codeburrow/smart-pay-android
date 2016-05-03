@@ -14,11 +14,13 @@ import org.json.JSONObject;
 
 /**
  * @author George Spiridakis <george@codeburrow.com>
- * @since 5/2/2016.
- * ====================================================
- * CODE BURROW
- * ====================================================
+ * @author Rizart Dokollari <r.dokollari@gmail.com>
+ * @since  5/2/2016.
+ * ===================================================
+ * ---------->    http://codeburrow.com    <----------
+ * ===================================================
  */
+
 public class GetTransactionsTask extends AsyncTask<Void, Void, JSONObject> {
 
     private final String LOG_TAG = AttemptToFindAccountTask.class.getSimpleName();

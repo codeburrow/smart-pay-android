@@ -15,7 +15,10 @@ import org.json.JSONObject;
 /**
  * @author George Spiridakis <george@codeburrow.com>
  * @author Rizart Dokollari <r.dokollari@gmail.com>
- * @since 4/30/2016
+ * @since  4/30/2016.
+ * ===================================================
+ * ---------->    http://codeburrow.com    <----------
+ * ===================================================
  */
 
 public class AttemptToFindCustomerTask extends AsyncTask<Void, Void, JSONObject> {

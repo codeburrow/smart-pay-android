@@ -8,12 +8,12 @@ import org.json.JSONObject;
 import java.util.UUID;
 
 /**
- * @author George Spiridakis <george@codeburrow.com>
  * @author Rizart Dokollari <r.dokollari@gmail.com>
+ * @author George Spiridakis <george@codeburrow.com>
  * @since 4/30/2016.
- * ====================================================
- * CODE BURROW
- * ====================================================
+ * ===================================================
+ * ---------->    http://codeburrow.com    <----------
+ * ===================================================
  */
 
 public class CustomerApi extends Api {

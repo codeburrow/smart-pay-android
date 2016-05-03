@@ -6,12 +6,14 @@ import org.json.JSONObject;
 import java.util.List;
 
 /**
+ * @author Rizart Dokollari <r.dokollari@gmail.com>
  * @author George Spiridakis <george@codeburrow.com>
- * @since 5/2/2016.
- * ====================================================
- * CODE BURROW
- * ====================================================
+ * @since 4/30/2016.
+ * ===================================================
+ * ---------->    http://codeburrow.com    <----------
+ * ===================================================
  */
+
 public class TransactionApi extends Api {
 
     private static final String LOG_TAG = TransactionApi.class.getSimpleName();

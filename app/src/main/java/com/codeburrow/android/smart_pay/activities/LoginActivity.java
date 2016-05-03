@@ -59,13 +59,13 @@ public class LoginActivity extends AppCompatActivity implements AccountAsyncResp
     }
 
     @Override
-    public void processFindAccountAsyncFinish(JSONObject loginAccount) {
+    public void processFindAccountAsyncFinish(JSONObject loginAccount, String errorFound) {
             AttemptToFindCustomerTask attemptToFindCustomerTask = new AttemptToFindCustomerTask(getApplicationContext(), this, AccountApi.findFirstCustomerNumberFromAccount(loginAccount));
             attemptToFindCustomerTask.execute();
     }
 
     @Override
-    public void processFindCustomerAsyncFinish(JSONObject loginCustomer) {
+    public void processFindCustomerAsyncFinish(JSONObject loginCustomer, String errorFound) {
         SharedPreferences.Editor editor = getSharedPreferences(PREFERENCES, Context.MODE_PRIVATE).edit();
         editor.putString(IBAN_PREFS_KEY, iban);
         editor.putString(PASSWORD_PREFS_KEY, password);

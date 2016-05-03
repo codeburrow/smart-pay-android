@@ -122,13 +122,13 @@ public class TransferMoneyActivity extends AppCompatActivity implements AccountA
     }
 
     @Override
-    public void processFindAccountAsyncFinish(JSONObject receiverAccount) {
+    public void processFindAccountAsyncFinish(JSONObject receiverAccount, String errorFound) {
         AttemptToFindCustomerTask attemptToFindCustomerTask = new AttemptToFindCustomerTask(getApplicationContext(), this, AccountApi.findFirstCustomerNumberFromAccount(receiverAccount));
         attemptToFindCustomerTask.execute();
     }
 
     @Override
-    public void processFindCustomerAsyncFinish(JSONObject receiverCustomer) {
+    public void processFindCustomerAsyncFinish(JSONObject receiverCustomer, String errorFound) {
         receiverOwnerName = CustomerApi.findLegalNameFromCustomer(receiverCustomer);
 
         showReceiverToUser = true;

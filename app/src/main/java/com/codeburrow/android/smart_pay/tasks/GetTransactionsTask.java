@@ -23,14 +23,16 @@ import org.json.JSONObject;
 
 public class GetTransactionsTask extends AsyncTask<Void, Void, JSONObject> {
 
-    private final String LOG_TAG = AttemptToFindAccountTask.class.getSimpleName();
+    private final String LOG_TAG = GetTransactionsTask.class.getSimpleName();
     private final Context mContext;
-    public TransactionAsyncResponse delegate = null;
+    public TransactionAsyncResponse asyncResponse = null;
+    private JSONArray transactions = null;
+    private String mError = null;
 
-    public GetTransactionsTask(Context context, TransactionAsyncResponse delegate) {
+    public GetTransactionsTask(Context context, TransactionAsyncResponse asyncResponse) {
         super();
 
-        this.delegate = delegate;
+        this.asyncResponse = asyncResponse;
         this.mContext = context;
     }
 
@@ -43,21 +45,24 @@ public class GetTransactionsTask extends AsyncTask<Void, Void, JSONObject> {
     @Override
     protected void onPostExecute(JSONObject apiResponse) {
         if (null == apiResponse) {
-            Toast.makeText(mContext, "No API Response.", Toast.LENGTH_LONG).show();
+            mError = "No API Response.";
+            Toast.makeText(mContext, mError, Toast.LENGTH_LONG).show();
             return;
         }
 
         try {
             if (!apiResponse.has(Api.TRANSACTIONS_KEY)) {
-                Toast.makeText(mContext, "API Error.", Toast.LENGTH_LONG).show();
+                mError = "API Error.";
+                Toast.makeText(mContext, mError, Toast.LENGTH_LONG).show();
                 Log.e(LOG_TAG, apiResponse.toString());
                 return;
             }
 
-            JSONArray transactions = apiResponse.getJSONArray(Api.TRANSACTIONS_KEY);
+            transactions = apiResponse.getJSONArray(Api.TRANSACTIONS_KEY);
 
             if (transactions.length() == 0) {
-                Toast.makeText(mContext, "No transactions found!", Toast.LENGTH_LONG).show();
+                mError = "No transactions found!";
+                Toast.makeText(mContext, mError, Toast.LENGTH_LONG).show();
                 Log.e(LOG_TAG, transactions.toString());
                 return;
             }
@@ -65,14 +70,17 @@ public class GetTransactionsTask extends AsyncTask<Void, Void, JSONObject> {
             Toast.makeText(mContext, "Transactions found.", Toast.LENGTH_SHORT).show();
 
             Log.e(LOG_TAG, transactions.toString());
-            delegate.processGetTransactionsAsyncFinish(transactions);
         } catch (JSONException e) {
             e.printStackTrace();
             Log.e(LOG_TAG, "CATCH EXCEPTION: " + e.getMessage());
+
+            mError = e.toString();
+        } finally {
+            asyncResponse.processGetTransactionsAsyncFinish(transactions, mError);
         }
     }
 
     public interface TransactionAsyncResponse {
-        void processGetTransactionsAsyncFinish(JSONArray transactions);
+        void processGetTransactionsAsyncFinish(JSONArray transactions, String errorFound);
     }
 }

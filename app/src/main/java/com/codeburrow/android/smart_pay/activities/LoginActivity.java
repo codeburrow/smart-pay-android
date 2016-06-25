@@ -46,7 +46,7 @@ public class LoginActivity extends AppCompatActivity implements AccountAsyncResp
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-        mIbanEditText = (EditText) findViewById(R.id.iban_editText);
+        mIbanEditText = (EditText) findViewById(R.id.username_editText);
         mPasswordEditText = (EditText) findViewById(R.id.password_editText);
     }
 

@@ -11,7 +11,7 @@
 
     <!-- activity_payment layout's colors-->
     <color name="colorBackground_payment">#f7fbff</color>
-    <color name="colorLabel_payment">#add3fa</color>
+    <color name="colorLabel_payment">#800D1F7E</color>
     <color name="colorLabelStroke_payment">#75b6f7</color>
     <color name="colorInfo_payment">#75b6f7</color>
     <color name="colorInfoStroke_payment">#1885F2</color>

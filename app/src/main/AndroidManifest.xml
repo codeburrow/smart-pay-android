@@ -18,7 +18,9 @@
             android:name="com.google.android.gms.version"
             android:value="@integer/google_play_services_version"/>
 
-        <activity android:name=".activities.LoginActivity">
+        <activity
+            android:name=".activities.LoginActivity"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
 
@@ -36,8 +38,8 @@
         </activity>
         <activity
             android:name=".activities.InsertAmountToReceiveActivity"
-            android:windowSoftInputMode="stateVisible|adjustResize"
-            android:noHistory="true">
+            android:noHistory="true"
+            android:windowSoftInputMode="stateVisible|adjustResize">
         </activity>
         <activity
             android:name=".activities.SuccessfulTransactionActivity"

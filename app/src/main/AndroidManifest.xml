@@ -58,6 +58,8 @@
             android:noHistory="true"
             android:screenOrientation="portrait">
         </activity>
+        <activity android:name=".activities.VerifyTransactionActivity">
+        </activity>
     </application>
 
 </manifest>

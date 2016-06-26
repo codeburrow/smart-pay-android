@@ -5,12 +5,19 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
-import android.widget.ArrayAdapter;
+import android.view.View;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.codeburrow.android.smart_pay.EurobankProduct;
+import com.codeburrow.android.smart_pay.EurobankProductArrayAdapter;
 import com.codeburrow.android.smart_pay.R;
+import com.codeburrow.android.smart_pay.tasks.GetProductsTask;
+
+import org.json.JSONObject;
+
+import java.util.ArrayList;
 
 /**
  * @author George Spiridakis <george@codeburrow.com>
@@ -21,7 +28,7 @@ import com.codeburrow.android.smart_pay.R;
  * ===================================================
  */
 
-public class TransferMoneyActivity extends AppCompatActivity {
+public class TransferMoneyActivity extends AppCompatActivity implements GetProductsTask.GetProductsAsyncResponse {
 
     public static final String LOG_TAG = TransferMoneyActivity.class.getSimpleName();
 
@@ -45,9 +52,27 @@ public class TransferMoneyActivity extends AppCompatActivity {
 
         mInfoTextView = (TextView) findViewById(R.id.info_text_view);
         mAccountsListView = (ListView) findViewById(R.id.accounts_list_view);
-        mAccountsListView.setAdapter(new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, new String[]{"Eurobank7", "Eurobank6", "Eurobank5", "NBG4", "Eurobank4", "Eurobank2", "Eurobank3", "Eurobank1", "Eurobank14", "NBG3", "Eurobank11", "Eurobank12",}));
+        ArrayList<EurobankProduct> accounts = new ArrayList<>();
+        accounts.add(new EurobankProduct("account", "1325243598", 1200, 50, "euro"));
+        accounts.add(new EurobankProduct("account", "4387589913", 200, 200, "euro"));
+        accounts.add(new EurobankProduct("account", "1355543598", 120, 60, "euro"));
+        accounts.add(new EurobankProduct("account", "1355543598", 5520, 5520, "euro"));
+        accounts.add(new EurobankProduct("account", "6676766698", 120, 1250, "euro"));
+        accounts.add(new EurobankProduct("account", "2353333398", 100, 100, "euro"));
+        accounts.add(new EurobankProduct("account", "4387589913", 200, 200, "euro"));
+        accounts.add(new EurobankProduct("account", "1355543598", 120, 60, "euro"));
+        accounts.add(new EurobankProduct("account", "1355543598", 5520, 5520, "euro"));
+        accounts.add(new EurobankProduct("account", "6676766698", 120, 1250, "euro"));
+        accounts.add(new EurobankProduct("account", "4387589913", 200, 200, "euro"));
+        accounts.add(new EurobankProduct("account", "1355543598", 120, 60, "euro"));
+        accounts.add(new EurobankProduct("account", "1355543598", 5520, 5520, "euro"));
+        accounts.add(new EurobankProduct("account", "6676766698", 120, 1250, "euro"));
+        mAccountsListView.setAdapter(new EurobankProductArrayAdapter(this, accounts));
 
         renderTransactionData();
+
+        // It is not executed.
+        new GetProductsTask(this, this);
     }
 
     private void renderTransactionData() {
@@ -105,6 +130,18 @@ public class TransferMoneyActivity extends AppCompatActivity {
         finish();
     }
 
+    public void cancel(View view) {
+        startActivity(new Intent(TransferMoneyActivity.this, ScanQrCodeActivity.class));
+    }
+
+    @Override
+    public void processGetProductsAsyncFinish(JSONObject accounts, String errorFound) {
+//        Log.e(LOG_TAG, accounts.toString());
+    }
+
+    public void next(View view) {
+        startActivity(new Intent(TransferMoneyActivity.this, VerifyTransactionActivity.class));
+    }
 
 //    private class AttemptToMakeTransactionTask extends AsyncTask<Void, Void, String> {
 //        private final String TAG = AttemptToMakeTransactionTask.class.getSimpleName();

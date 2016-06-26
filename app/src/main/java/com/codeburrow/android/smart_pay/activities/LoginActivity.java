@@ -56,18 +56,6 @@ public class LoginActivity extends AppCompatActivity implements AccessTokenAsync
         getAccessTokenTask.execute();
     }
 
-//    @Override
-//    public void processFindCustomerAsyncFinish(JSONObject loginCustomer, String errorFound) {
-//        SharedPreferences.Editor editor = getSharedPreferences(PREFERENCES, Context.MODE_PRIVATE).edit();
-//        editor.putString(IBAN_PREFS_KEY, username);
-//        editor.putString(PASSWORD_PREFS_KEY, password);
-//        editor.putString(OWNER_PREFS_KEY, CustomerApi.findLegalNameFromCustomer(loginCustomer));
-//        editor.commit();
-//
-//        startActivity(new Intent(this, ScanQrCodeActivity.class));
-//        finish();
-//    }
-
     @Override
     public void processGetAccessTokenAsyncFinish(JSONObject token, String errorFound) {
         try {
@@ -78,6 +66,7 @@ public class LoginActivity extends AppCompatActivity implements AccessTokenAsync
             Log.e(LOG_TAG, token.getString("access_token") + " " + token.getString("refresh_token"));
 
             startActivity(new Intent(LoginActivity.this, ScanQrCodeActivity.class));
+            finish();
         } catch (JSONException e) {
             Log.e(LOG_TAG, e.getMessage());
         }

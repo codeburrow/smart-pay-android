@@ -162,8 +162,8 @@ public class ScanQrCodeActivity extends AppCompatActivity {
     }
 
     public void showDetails(View view) {
-//        Intent refreshAccountIntent = new Intent(this, RefreshAccountActivity.class);
-//        startActivity(refreshAccountIntent);
+        Intent customerDetailsAccountIntent = new Intent(this, CustomerDetailsAccountActivity.class);
+        startActivity(customerDetailsAccountIntent);
     }
 
     @Override

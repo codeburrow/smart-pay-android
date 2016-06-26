@@ -5,7 +5,9 @@ import android.util.Log;
 import org.apache.http.HttpResponse;
 import org.apache.http.NameValuePair;
 import org.apache.http.client.entity.UrlEncodedFormEntity;
+import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
+import org.apache.http.client.utils.URLEncodedUtils;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.json.JSONException;
@@ -15,6 +17,7 @@ import java.io.BufferedReader;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.UnsupportedEncodingException;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -48,6 +51,30 @@ public class EurobankApi {
         HttpResponse httpResponse = null;
         try {
             httpResponse = httpClient.execute(httpPost);
+
+            return convertHttpResponse(httpResponse.getEntity().getContent());
+        } catch (Exception e) {
+            e.printStackTrace();
+            Log.e(LOG_TAG, e.getMessage());
+        }
+        return null;
+    }
+
+    public JSONObject makeGetRequest(String url, List<NameValuePair> params, String access_token) {
+        if (null == params) {
+            params = new ArrayList<>();
+        }
+
+        String paramString = URLEncodedUtils.format(params, "UTF-8");
+        url += "?" + paramString;
+        HttpGet httpGet = new HttpGet(url);
+        httpGet.setHeader("Authorization", "Bearer " + access_token);
+
+        DefaultHttpClient httpClient = new DefaultHttpClient();
+        HttpResponse httpResponse = null;
+
+        try {
+            httpResponse = httpClient.execute(httpGet);
 
             return convertHttpResponse(httpResponse.getEntity().getContent());
         } catch (Exception e) {

@@ -27,7 +27,6 @@
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
-
         <activity
             android:name=".activities.ScanQrCodeActivity"
             android:noHistory="true">
@@ -48,6 +47,10 @@
         </activity>
         <activity
             android:name=".activities.GenerateQrCodeActivity"
+            android:noHistory="true">
+        </activity>
+        <activity
+            android:name=".activities.CustomerDetailsAccountActivity"
             android:noHistory="true">
         </activity>
     </application>

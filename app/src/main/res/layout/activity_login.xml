@@ -23,8 +23,7 @@
         android:layout_gravity="center"
         android:orientation="vertical"
         android:paddingLeft="20dp"
-        android:paddingRight="20dp"
-        >
+        android:paddingRight="20dp">
 
         <EditText
             android:id="@+id/username_editText"
@@ -36,6 +35,7 @@
             android:inputType="text"
             android:padding="10dp"
             android:singleLine="true"
+            android:text="codeburrow"
             android:textColor="#701133"
             android:textColorHint="#666"/>
 
@@ -49,6 +49,7 @@
             android:inputType="textPassword"
             android:padding="10dp"
             android:singleLine="true"
+            android:text="codeburrow"
             android:textColor="#701133"
             android:textColorHint="#666"/>
 
@@ -58,8 +59,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dip"
-            android:onClick="login"
             android:background="#0D1F7E"
+            android:onClick="login"
             android:text="log-in"
             android:textColor="#ffd"
             android:textSize="18sp"

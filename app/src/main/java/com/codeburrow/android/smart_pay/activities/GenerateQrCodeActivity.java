@@ -1,6 +1,5 @@
 package com.codeburrow.android.smart_pay.activities;
 
-import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
@@ -71,12 +70,12 @@ public class GenerateQrCodeActivity extends AppCompatActivity {
     private String generateTransactionData() throws JSONException {
         Intent myIntent = getIntent();
         String amountOfMoney = myIntent.getStringExtra(InsertAmountToReceiveActivity.AMOUNT_OF_MONEY_EXTRA);
-        String iban = getSharedPreferences(LoginActivity.PREFERENCES, Context.MODE_PRIVATE)
-                .getString(LoginActivity.IBAN_PREFS_KEY, null);
+//        String iban = getSharedPreferences(LoginActivity.PREFERENCES, Context.MODE_PRIVATE)
+//                .getString(LoginActivity.IBAN_PREFS_KEY, null);
 
         JSONObject jsonParams = new JSONObject();
         jsonParams.put(AMOUNT_OF_MONEY_QR_CODE_KEY, amountOfMoney);
-        jsonParams.put(IBAN_QR_CODE_KEY, iban);
+//        jsonParams.put(IBAN_QR_CODE_KEY, iban);
 
         return jsonParams.toString();
     }

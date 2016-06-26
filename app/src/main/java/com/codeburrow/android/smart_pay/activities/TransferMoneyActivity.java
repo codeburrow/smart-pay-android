@@ -6,8 +6,8 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
-import android.view.View;
-import android.widget.EditText;
+import android.widget.ArrayAdapter;
+import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -38,8 +38,8 @@ public class TransferMoneyActivity extends AppCompatActivity implements AccountA
 
     public static final String LOG_TAG = TransferMoneyActivity.class.getSimpleName();
 
-    private EditText passEditText;
-    private TextView infoTextView;
+    private TextView mInfoTextView;
+    private ListView mAccountsListView;
 
     // QR code information
     private String mIban;
@@ -55,13 +55,14 @@ public class TransferMoneyActivity extends AppCompatActivity implements AccountA
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_transfer_money);
 
-        passEditText = (EditText) findViewById(R.id.password_edittext);
-        infoTextView = (TextView) findViewById(R.id.info_text_view);
+        mInfoTextView = (TextView) findViewById(R.id.info_text_view);
+        mAccountsListView = (ListView) findViewById(R.id.accounts_list_view);
+        mAccountsListView.setAdapter(new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, new String[]{"Eurobank7","Eurobank6","Eurobank5", "NBG4","Eurobank4","Eurobank2","Eurobank3","Eurobank1","Eurobank14", "NBG3","Eurobank11","Eurobank12",}));
 
-        renderTransactionData();
+//        renderTransactionData();
 
         AttemptToFindAccountTask attemptToFindAccountTask = new AttemptToFindAccountTask(getApplicationContext(), this, mIban);
-        attemptToFindAccountTask.execute();
+//        attemptToFindAccountTask.execute();
     }
 
     private void renderTransactionData() {
@@ -74,27 +75,27 @@ public class TransferMoneyActivity extends AppCompatActivity implements AccountA
 
     public void updateInfoText() {
         if (showReceiverToUser) {
-            infoTextView.setText("Send to\nNAME: " + receiverOwnerName + "\nIBAN: " + mIban + "\nThe amount of: " + mAmountOfMoney + " EUR\nuuid: " + uuid);
+            mInfoTextView.setText("Send to\nNAME: " + receiverOwnerName + "\nIBAN: " + mIban + "\nThe amount of: " + mAmountOfMoney + " EUR\nuuid: " + uuid);
         } else {
-            infoTextView.setText("Scanned an INVALID IBAN");
+            mInfoTextView.setText("Scanned an INVALID IBAN");
         }
     }
 
-    public void verifyTransaction(View view) {
-        String password = passEditText.getText().toString();
-
-        if (showReceiverToUser) {
-            if (validatePassword(password)) {
-                AttemptToMakeTransactionTask attemptToMakeTransactionTask = new AttemptToMakeTransactionTask();
-                attemptToMakeTransactionTask.execute();
-            } else {
-                toast("Wrong password.");
-            }
-        } else {
-            toast("Invalid IBAN");
-        }
-
-    }
+//    public void verifyTransaction(View view) {
+//        String password = passEditText.getText().toString();
+//
+//        if (showReceiverToUser) {
+//            if (validatePassword(password)) {
+//                AttemptToMakeTransactionTask attemptToMakeTransactionTask = new AttemptToMakeTransactionTask();
+//                attemptToMakeTransactionTask.execute();
+//            } else {
+//                toast("Wrong password.");
+//            }
+//        } else {
+//            toast("Invalid IBAN");
+//        }
+//
+//    }
 
     public boolean validatePassword(String password) {
         String storedPassword = getSharedPreferences(LoginActivity.PREFERENCES, Context.MODE_PRIVATE)

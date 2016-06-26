@@ -50,23 +50,20 @@
             android:padding="10dp"
             android:singleLine="true"
             android:textColor="#701133"
-            android:textColorHint="#666"
-            />
+            android:textColorHint="#666"/>
 
         <!-- Login Button -->
-
         <Button
             android:id="@+id/login"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dip"
+            android:onClick="login"
             android:background="#0D1F7E"
             android:text="log-in"
             android:textColor="#ffd"
             android:textSize="18sp"
             android:textStyle="bold"/>
-
-        <!-- Link to Register Screen -->
 
     </LinearLayout>
 

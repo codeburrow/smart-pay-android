@@ -14,27 +14,23 @@
         android:layout_marginBottom="10dp"
         android:background="@drawable/rounded_text_view"
         android:minLines="4"
-        android:text="@string/loading_information"
+        android:text="You will pay:"
         android:textAlignment="center"
         android:textSize="20sp"/>
-    <!-- You will pay:\n
+        <!--\n
          Starbucks\n
          the amount of:\n
          20 euros.-->
 
-    <ScrollView
+    <ListView
         android:id="@+id/accounts_list_view"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_above="@+id/buttons_linear_layout"
         android:layout_below="@id/info_text_view"
-        android:layout_marginBottom="10dp">
-
-        <ListView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
-
-    </ScrollView>
+        android:choiceMode="singleChoice"
+        android:listSelector="#CCFFFF00"
+        android:layout_marginBottom="10dp"/>
 
     <LinearLayout
         android:id="@+id/buttons_linear_layout"
@@ -64,7 +60,8 @@
             android:minHeight="48dp"
             android:text="Next"
             android:textColor="@android:color/white"
-            android:textSize="20sp"/>
+            android:textSize="20sp"
+            android:textStyle="bold"/>
 
     </LinearLayout>
 

@@ -11,14 +11,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.codeburrow.android.smart_pay.R;
-import com.codeburrow.android.smart_pay.apis.AccountApi;
-import com.codeburrow.android.smart_pay.apis.CustomerApi;
-import com.codeburrow.android.smart_pay.tasks.AttemptToFindAccountTask;
-import com.codeburrow.android.smart_pay.tasks.AttemptToFindAccountTask.AccountAsyncResponse;
-import com.codeburrow.android.smart_pay.tasks.AttemptToFindCustomerTask;
-import com.codeburrow.android.smart_pay.tasks.AttemptToFindCustomerTask.CustomerAsyncResponse;
-
-import org.json.JSONObject;
 
 /**
  * @author George Spiridakis <george@codeburrow.com>
@@ -29,7 +21,7 @@ import org.json.JSONObject;
  * ===================================================
  */
 
-public class TransferMoneyActivity extends AppCompatActivity implements AccountAsyncResponse, CustomerAsyncResponse {
+public class TransferMoneyActivity extends AppCompatActivity {
 
     public static final String LOG_TAG = TransferMoneyActivity.class.getSimpleName();
 
@@ -37,7 +29,8 @@ public class TransferMoneyActivity extends AppCompatActivity implements AccountA
     private ListView mAccountsListView;
 
     // QR code information
-    private String mIban;
+    private String mFirstName;
+    private String mLastName;
     private String mAmountOfMoney;
     private boolean showReceiverToUser = false;
 
@@ -54,26 +47,20 @@ public class TransferMoneyActivity extends AppCompatActivity implements AccountA
         mAccountsListView = (ListView) findViewById(R.id.accounts_list_view);
         mAccountsListView.setAdapter(new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, new String[]{"Eurobank7", "Eurobank6", "Eurobank5", "NBG4", "Eurobank4", "Eurobank2", "Eurobank3", "Eurobank1", "Eurobank14", "NBG3", "Eurobank11", "Eurobank12",}));
 
-//        renderTransactionData();
-
-        AttemptToFindAccountTask attemptToFindAccountTask = new AttemptToFindAccountTask(getApplicationContext(), this, mIban);
-//        attemptToFindAccountTask.execute();
+        renderTransactionData();
     }
 
     private void renderTransactionData() {
         mAmountOfMoney = getIntent().getStringExtra(ScanQrCodeActivity.AMOUNT_OF_MONEY_EXTRA);
-        mIban = getIntent().getStringExtra(ScanQrCodeActivity.IBAN_EXTRA);
+        mFirstName = getIntent().getStringExtra("first_name");
+        mLastName = getIntent().getStringExtra("last_name");
 
-        Log.e(LOG_TAG, "Send to\nQR_INFO: " + mIban + "\nThe amount of: " + mAmountOfMoney + "$\nuuid: " + uuid);
+        Log.e(LOG_TAG, "Send to\n: " + mFirstName + " " + mLastName + "\nThe amount of: " + mAmountOfMoney);
         updateInfoText();
     }
 
     public void updateInfoText() {
-        if (showReceiverToUser) {
-            mInfoTextView.setText("Send to\nNAME: " + receiverOwnerName + "\nIBAN: " + mIban + "\nThe amount of: " + mAmountOfMoney + " EUR\nuuid: " + uuid);
-        } else {
-            mInfoTextView.setText("Scanned an INVALID IBAN");
-        }
+        mInfoTextView.setText("Send to:\n " + mFirstName + " " + mLastName + "\nThe amount of:\n " + mAmountOfMoney);
     }
 
 //    public void verifyTransaction(View view) {
@@ -116,21 +103,6 @@ public class TransferMoneyActivity extends AppCompatActivity implements AccountA
     public void onBackPressed() {
         startActivity(new Intent(this, ScanQrCodeActivity.class));
         finish();
-    }
-
-    @Override
-    public void processFindAccountAsyncFinish(JSONObject receiverAccount, String errorFound) {
-        AttemptToFindCustomerTask attemptToFindCustomerTask = new AttemptToFindCustomerTask(getApplicationContext(), this, AccountApi.findFirstCustomerNumberFromAccount(receiverAccount));
-        attemptToFindCustomerTask.execute();
-    }
-
-    @Override
-    public void processFindCustomerAsyncFinish(JSONObject receiverCustomer, String errorFound) {
-        receiverOwnerName = CustomerApi.findLegalNameFromCustomer(receiverCustomer);
-
-        showReceiverToUser = true;
-
-        updateInfoText();
     }
 
 

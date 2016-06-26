@@ -134,6 +134,7 @@ public class ScanQrCodeActivity extends AppCompatActivity {
                 JSONObject json = null;
                 try {
                     json = (JSONObject) new JSONParser().parse(qrCodeValues);
+                    Log.e(LOG_TAG, json.toString());
                 } catch (ParseException e) {
                     e.printStackTrace();
                     Toast.makeText(ScanQrCodeActivity.this, "Unable to extract data from QR code.", Toast.LENGTH_SHORT).show();
@@ -141,11 +142,15 @@ public class ScanQrCodeActivity extends AppCompatActivity {
 
 
                 String amountOfMoney = (String) json.get(GenerateQrCodeActivity.AMOUNT_OF_MONEY_QR_CODE_KEY);
-                String iban = (String) json.get(GenerateQrCodeActivity.IBAN_QR_CODE_KEY);
+                String id = (String) json.get("id");
+                String firstName = (String) json.get("first_name");
+                String lastName = (String) json.get("last_name");
 
                 Intent transferMoneyIntent = new Intent(getApplicationContext(), TransferMoneyActivity.class);
                 transferMoneyIntent.putExtra(AMOUNT_OF_MONEY_EXTRA, amountOfMoney);
-                transferMoneyIntent.putExtra(IBAN_EXTRA, iban);
+                transferMoneyIntent.putExtra("id", id);
+                transferMoneyIntent.putExtra("first_name", firstName);
+                transferMoneyIntent.putExtra("last_name", lastName);
                 startActivity(transferMoneyIntent);
             }
 

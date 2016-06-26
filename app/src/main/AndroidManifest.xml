@@ -29,7 +29,8 @@
         </activity>
         <activity
             android:name=".activities.ScanQrCodeActivity"
-            android:noHistory="true">
+            android:noHistory="true"
+            android:screenOrientation="portrait">
         </activity>
         <activity
             android:name=".activities.TransferMoneyActivity"
@@ -39,19 +40,23 @@
         <activity
             android:name=".activities.InsertAmountToReceiveActivity"
             android:noHistory="true"
+            android:screenOrientation="portrait"
             android:windowSoftInputMode="stateVisible|adjustResize">
         </activity>
         <activity
             android:name=".activities.SuccessfulTransactionActivity"
-            android:noHistory="true">
+            android:noHistory="true"
+            android:screenOrientation="portrait">
         </activity>
         <activity
             android:name=".activities.GenerateQrCodeActivity"
-            android:noHistory="true">
+            android:noHistory="true"
+            android:screenOrientation="portrait">
         </activity>
         <activity
             android:name=".activities.CustomerDetailsAccountActivity"
-            android:noHistory="true">
+            android:noHistory="true"
+            android:screenOrientation="portrait">
         </activity>
     </application>
 
